@@ -57,6 +57,7 @@
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan tailwindcss:download --force",
             "@php artisan tailwindcss:build",
+            "@php artisan storage:link",
             "@php artisan migrate --graceful --ansi"
         ],
         "dev": [
