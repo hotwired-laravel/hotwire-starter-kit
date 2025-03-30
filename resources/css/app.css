@@ -1,0 +1,30 @@
+@import 'tailwindcss';
+
+@source "../views";
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
+@plugin "./tailwind/daisyui.js" {
+    /* In practice, you will likely ship only with two themes, as below: */
+    /* themes: light --default, dark --prefersdark; */
+    themes: all;
+};
+
+@theme {
+    --animate-appear-then-fade-out: appear-then-fade-out 5s both;
+
+    @keyframes appear-then-fade-out {
+        0%, 100% {
+            opacity: 0;
+        }
+        10%, 80% {
+            opacity: 1;
+        }
+    }
+}
+
+@custom-variant hotwire-native (&:where(.hotwire-native *));
+
+[data-bridge-components~="toast"] [data-controller~="bridge--toast"],
+[data-bridge-components~="form"] [data-controller~="bridge--form"]:not([data-controller-optout-android~="bridge--form"]) [type="submit"] {
+    @apply hidden;
+}
