@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0471596e2e4e8fd530ef6fa764ec892f",
+    "content-hash": "f3d4065398a4562bd384137c65d23182",
     "packages": [
         {
             "name": "brick/math",
@@ -5769,6 +5769,152 @@
             "time": "2024-12-21T16:25:41+00:00"
         },
         {
+            "name": "tonysm/importmap-laravel",
+            "version": "2.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tonysm/importmap-laravel.git",
+                "reference": "48bf7436764cf405ed3cd6f00427eb9240d63ee6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tonysm/importmap-laravel/zipball/48bf7436764cf405ed3cd6f00427eb9240d63ee6",
+                "reference": "48bf7436764cf405ed3cd6f00427eb9240d63ee6",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^11.0|^12.0",
+                "illuminate/support": "^11.0|^12.0",
+                "php": "^8.2",
+                "spatie/laravel-package-tools": "^1.9"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "^7.4",
+                "laravel/pint": "^1.10",
+                "orchestra/testbench": "^9.0|^10.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan-deprecation-rules": "^1.0|^2.0",
+                "phpstan/phpstan-phpunit": "^1.0|^2.0",
+                "phpunit/phpunit": "^10.5|^11.5.3"
+            },
+            "bin": [
+                "bin/importmap"
+            ],
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Importmap": "Tonysm\\ImportmapLaravel\\Facades\\Importmap"
+                    },
+                    "providers": [
+                        "Tonysm\\ImportmapLaravel\\ImportmapLaravelServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Tonysm\\ImportmapLaravel\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tony Messias",
+                    "email": "tonysm@hey.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Use ESM with importmap to manage modern JavaScript in Laravel without transpiling or bundling.",
+            "homepage": "https://github.com/tonysm/importmap-laravel",
+            "keywords": [
+                "importmap-laravel",
+                "laravel",
+                "tonysm"
+            ],
+            "support": {
+                "issues": "https://github.com/tonysm/importmap-laravel/issues",
+                "source": "https://github.com/tonysm/importmap-laravel/tree/2.4.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/tonysm",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-03-02T20:38:51+00:00"
+        },
+        {
+            "name": "tonysm/tailwindcss-laravel",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tonysm/tailwindcss-laravel.git",
+                "reference": "8dee933ce5c10871f3c44ab0c11a51ad086588ca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tonysm/tailwindcss-laravel/zipball/8dee933ce5c10871f3c44ab0c11a51ad086588ca",
+                "reference": "8dee933ce5c10871f3c44ab0c11a51ad086588ca",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^11.0|^12.0",
+                "php": "^8.2",
+                "spatie/laravel-package-tools": "^1.16"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^9.0|^10.0",
+                "phpunit/phpunit": "^10.5|^11.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Tonysm\\TailwindCss\\TailwindCssServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Tonysm\\TailwindCss\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tony Messias",
+                    "email": "tonysm@hey.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This package wraps up the standalone executable version of the Tailwind CSS framework.",
+            "homepage": "https://github.com/tonysm/tailwindcss-laravel",
+            "keywords": [
+                "laravel",
+                "tailwindcss"
+            ],
+            "support": {
+                "issues": "https://github.com/tonysm/tailwindcss-laravel/issues",
+                "source": "https://github.com/tonysm/tailwindcss-laravel/tree/2.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/tonysm",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-03-02T20:21:02+00:00"
+        },
+        {
             "name": "vlucas/phpdotenv",
             "version": "v5.6.1",
             "source": {
@@ -9253,152 +9399,6 @@
                 }
             ],
             "time": "2024-03-03T12:36:25+00:00"
-        },
-        {
-            "name": "tonysm/importmap-laravel",
-            "version": "2.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tonysm/importmap-laravel.git",
-                "reference": "48bf7436764cf405ed3cd6f00427eb9240d63ee6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tonysm/importmap-laravel/zipball/48bf7436764cf405ed3cd6f00427eb9240d63ee6",
-                "reference": "48bf7436764cf405ed3cd6f00427eb9240d63ee6",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/contracts": "^11.0|^12.0",
-                "illuminate/support": "^11.0|^12.0",
-                "php": "^8.2",
-                "spatie/laravel-package-tools": "^1.9"
-            },
-            "require-dev": {
-                "guzzlehttp/guzzle": "^7.4",
-                "laravel/pint": "^1.10",
-                "orchestra/testbench": "^9.0|^10.0",
-                "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan-deprecation-rules": "^1.0|^2.0",
-                "phpstan/phpstan-phpunit": "^1.0|^2.0",
-                "phpunit/phpunit": "^10.5|^11.5.3"
-            },
-            "bin": [
-                "bin/importmap"
-            ],
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "aliases": {
-                        "Importmap": "Tonysm\\ImportmapLaravel\\Facades\\Importmap"
-                    },
-                    "providers": [
-                        "Tonysm\\ImportmapLaravel\\ImportmapLaravelServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Tonysm\\ImportmapLaravel\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Tony Messias",
-                    "email": "tonysm@hey.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Use ESM with importmap to manage modern JavaScript in Laravel without transpiling or bundling.",
-            "homepage": "https://github.com/tonysm/importmap-laravel",
-            "keywords": [
-                "importmap-laravel",
-                "laravel",
-                "tonysm"
-            ],
-            "support": {
-                "issues": "https://github.com/tonysm/importmap-laravel/issues",
-                "source": "https://github.com/tonysm/importmap-laravel/tree/2.4.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/tonysm",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-03-02T20:38:51+00:00"
-        },
-        {
-            "name": "tonysm/tailwindcss-laravel",
-            "version": "2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tonysm/tailwindcss-laravel.git",
-                "reference": "8dee933ce5c10871f3c44ab0c11a51ad086588ca"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tonysm/tailwindcss-laravel/zipball/8dee933ce5c10871f3c44ab0c11a51ad086588ca",
-                "reference": "8dee933ce5c10871f3c44ab0c11a51ad086588ca",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/contracts": "^11.0|^12.0",
-                "php": "^8.2",
-                "spatie/laravel-package-tools": "^1.16"
-            },
-            "require-dev": {
-                "orchestra/testbench": "^9.0|^10.0",
-                "phpunit/phpunit": "^10.5|^11.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Tonysm\\TailwindCss\\TailwindCssServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/helpers.php"
-                ],
-                "psr-4": {
-                    "Tonysm\\TailwindCss\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Tony Messias",
-                    "email": "tonysm@hey.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "This package wraps up the standalone executable version of the Tailwind CSS framework.",
-            "homepage": "https://github.com/tonysm/tailwindcss-laravel",
-            "keywords": [
-                "laravel",
-                "tailwindcss"
-            ],
-            "support": {
-                "issues": "https://github.com/tonysm/tailwindcss-laravel/issues",
-                "source": "https://github.com/tonysm/tailwindcss-laravel/tree/2.1.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/tonysm",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-03-02T20:21:02+00:00"
         }
     ],
     "aliases": [],
