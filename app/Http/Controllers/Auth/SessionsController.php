@@ -57,6 +57,10 @@ class SessionsController extends Controller
         Session::invalidate();
         Session::regenerateToken();
 
+        if (request()->wasFromHotwireNative()) {
+            return redirect(route('login'));
+        }
+
         return redirect('/');
     }
 
@@ -86,6 +90,6 @@ class SessionsController extends Controller
      */
     protected function throttleKey(Request $request): string
     {
-        return Str::transliterate(Str::lower($request->input('email')).'|'.$request->ip());
+        return Str::transliterate(Str::lower($request->input('email')) . '|' . $request->ip());
     }
 }
