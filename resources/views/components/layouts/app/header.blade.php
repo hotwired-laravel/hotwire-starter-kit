@@ -31,7 +31,7 @@
                         <span class="sr-only">{{ __('Search') }}</span>
                     </x-navbar.item>
 
-                    <x-navbar.item icon="code-bracket" target="_blank" href="https://github.com/hotwired-laravel/turbo-importmaps-starter-kit" class="px-2.5 [&>div>svg]:size-5! [&>div>svg]:mr-0! h-10 max-lg:hidden">
+                    <x-navbar.item icon="code-bracket" target="_blank" href="https://github.com/hotwired-laravel/hotwire-starter-kit" class="px-2.5 [&>div>svg]:size-5! [&>div>svg]:mr-0! h-10 max-lg:hidden">
                         <span class="sr-only">{{ __('Repository') }}</span>
                     </x-navbar.item>
 
@@ -110,7 +110,7 @@
                 <div class="flex-1 w-0"></div>
 
                 <x-sidebar.navlist>
-                    <x-sidebar.navlist-item icon="code-bracket" target="_blank" href="https://github.com/hotwired-laravel/turbo-importmaps-starter-kit">{{ __('Repository') }}</x-sidebar.navlist-item>
+                    <x-sidebar.navlist-item icon="code-bracket" target="_blank" href="https://github.com/hotwired-laravel/hotwire-starter-kit">{{ __('Repository') }}</x-sidebar.navlist-item>
                     <x-sidebar.navlist-item icon="open-book" target="_blank" href="https://turbo-laravel.com">{{ __('Documentation') }}</x-sidebar.navlist-item>
                 </x-sidebar.navlist>
             </x-slot>
