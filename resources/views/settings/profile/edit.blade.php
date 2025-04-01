@@ -71,10 +71,6 @@
                     <div class="flex items-center justify-end">
                         <x-form.button.primary type="submit" class="w-full" data-bridge--form-target="submit" data-bridge-title="{{ __('Save') }}">{{ __('Save') }}</x-form.button.primary>
                     </div>
-
-                    <x-action-message class="me-3" on="profile-updated">
-                        {{ __('Saved.') }}
-                    </x-action-message>
                 </div>
             </form>
         </x-page-card>
