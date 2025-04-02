@@ -43,7 +43,7 @@
                         @csrf
                         @method('PUT')
 
-                        <button type="submit" class="sr-only">Update Theme</button>
+                        <button type="submit" class="sr-only">{{ __('Update Theme') }}</button>
 
                         <div class="dropdown dropdown-end">
                             <x-navbar.item-button icon="paint-brush" class="px-2.5 [&>div>svg]:size-5! [&>div>svg]:mr-0! h-10 max-lg:hidden">
