@@ -49,20 +49,14 @@
                     <x-form.error :message="$errors->first('email')" />
 
                     @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail &&! auth()->user()->hasVerifiedEmail())
-                        <div>
+                        <div class="flex flex-col justify-center">
                             <x-text class="mt-4">
                                 {{ __('Your email address is unverified.') }}
-
-                                <x-form.button.link form="resend-email-verification" class="text-sm cursor-pointer">
-                                    {{ __('Click here to re-send the verification email.') }}
-                                </x-form.button.link>
                             </x-text>
 
-                            @if (session('status') === 'verification-link-sent')
-                                <x-text class="mt-2 font-medium !dark:text-green-400 !text-green-600">
-                                    {{ __('A new verification link has been sent to your email address.') }}
-                                </x-text>
-                            @endif
+                            <x-form.button.link form="resend-email-verification" class="text-sm cursor-pointer">
+                                {{ __('Re-send the verification email') }}
+                            </x-form.button.link>
                         </div>
                     @endif
                 </div>

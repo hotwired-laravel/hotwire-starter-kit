@@ -29,7 +29,7 @@ class VerifyEmailController extends Controller
 
         Auth::user()->sendEmailVerificationNotification();
 
-        return redirect()->back()->with('notice', 'verification-link-sent');
+        return redirect()->back()->with('notice', __('Verification email was sent.'))->with('verification-sent', true);
     }
 
     /**
@@ -38,7 +38,7 @@ class VerifyEmailController extends Controller
     public function update(EmailVerificationRequest $request): RedirectResponse
     {
         if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
+            return redirect()->intended(route('dashboard', absolute: false) . '?verified=1');
         }
 
         if ($request->user()->markEmailAsVerified()) {
@@ -48,6 +48,6 @@ class VerifyEmailController extends Controller
             event(new Verified($user));
         }
 
-        return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
+        return redirect()->intended(route('dashboard', absolute: false) . '?verified=1');
     }
 }
