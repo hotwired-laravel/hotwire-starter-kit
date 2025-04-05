@@ -36,9 +36,9 @@
 
             <!-- Remember Me -->
             @hotwirenative
-            <input type="hidden" name="remember_me" value="1" />
+                <input type="hidden" name="remember_me" value="1" />
             @else
-            <x-form.checkbox id="remember_me" :label="__('Remember me')" name="remember" />
+                <x-form.checkbox id="remember_me" :label="__('Remember me')" name="remember" />
             @endhotwirenative
 
             <div class="flex items-center justify-end">
