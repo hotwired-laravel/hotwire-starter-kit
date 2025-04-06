@@ -99,7 +99,9 @@
 
             @include('partials.notifications')
 
-            {{ $slot }}
+            <div>
+                {{ $slot }}
+            </div>
 
             <x-slot name="aside">
                 <div class="flex items-center space-x-2">
