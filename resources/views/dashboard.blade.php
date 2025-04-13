@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <div class="hidden md:block relative h-full flex-1 overflow-hidden rounded-box border border-neutral/10 dark:border-neutral/80">
+        <div class="relative aspect-video md:aspect-auto h-full flex-1 overflow-hidden rounded-box border border-neutral/10 dark:border-neutral/80">
             <x-placeholder-pattern class="absolute inset-0 size-full stroke-neutral/30 dark:stroke-neutral/90" />
         </div>
     </div>
