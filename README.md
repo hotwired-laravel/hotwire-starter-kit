@@ -22,6 +22,23 @@ But we also ship with a [Procfile](./Procfile) so you may run it with [foreman](
 composer run dev:overmind
 ```
 
+### Deployment
+
+Deploying a Hotwired Laravel app is just like deploying any other Laravel app. It only differs a bit because we're using [Tailwind CSS Laravel](https://github.com/tonysm/tailwindcss-laravel) and [Importmap Laravel](https://github.com/tonysm/importmap-laravel), so make sure you add the steps to your deploy script:
+
+```bash
+# Build the Tailwind CSS styles...
+php artisan tailwindcss:download
+php artisan tailwindcss:build --prod
+
+# Copy JavaScript files and generate the production manifest...
+php artisan importmap:optimize
+```
+
+If you're uploading your assets to a CDN (like in Vapor), make sure you set the `ASSET_URL` before running these commands, since the Importmap manifest will be created using the full URL that relies on this flag.
+
+For more information, head out to the [Tailwind CSS Laravel](https://github.com/tonysm/tailwindcss-laravel#deploying-your-app) and [Importmap Laravel](https://github.com/tonysm/importmap-laravel) documentation.
+
 ## Contributing
 
 Thank you for considering contributing to our starter kit! Please, feel free to make issues and send pull requests if you think something could be done differently.
