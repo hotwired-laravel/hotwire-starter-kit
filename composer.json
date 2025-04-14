@@ -2,7 +2,7 @@
     "$schema": "https://getcomposer.org/schema.json",
     "name": "hotwired-laravel/hotwire-starter-kit",
     "type": "project",
-    "description": "A Laravel Starter Kit for Hotwire",
+    "description": "A Hotwire Starter Kit for Hotwire",
     "keywords": [
         "laravel",
         "framework",
