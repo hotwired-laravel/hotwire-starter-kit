@@ -40,7 +40,7 @@
                                 <span class="sr-only">{{ __('Repository') }}</span>
                             </x-navbar.item>
 
-                            <x-navbar.item icon="open-book" target="_blank" href="https://turbo-laravel.com" class="px-2.5 [&>div>svg]:size-5! [&>div>svg]:mr-0! h-10 max-lg:hidden">
+                            <x-navbar.item icon="book-open" target="_blank" href="https://turbo-laravel.com" class="px-2.5 [&>div>svg]:size-5! [&>div>svg]:mr-0! h-10 max-lg:hidden">
                                 <span class="sr-only">{{ __('Documentation') }}</span>
                             </x-navbar.item>
 
@@ -69,14 +69,14 @@
 
                                                 <div class="w-32 truncate text-left">{{ $theme }}</div>
 
-                                                <x-icons.check size="md" class="invisible" />
+                                                <x-heroicon-o-check class="size-4 invisible" />
                                             </button>
                                         </li>
                                         @endforeach
                                         <li></li>
                                         <li>
                                             <a href="https://daisyui.com/theme-generator/" class="btn btn-ghost w-full flex gap-4 px-2" target="_blank">
-                                                <x-icons.paint-brush size="md" class="fill-current" />
+                                                <x-heroicon-o-paint-brush class="size-4 fill-current" />
 
                                                 <div class="grow text-left text-sm font-bold">{{ __('make your own!') }}</div>
                                             </a>
@@ -120,7 +120,7 @@
 
                 <x-sidebar.navlist class="p-0">
                     <x-sidebar.navlist-item icon="code-bracket" target="_blank" href="https://github.com/hotwired-laravel/hotwire-starter-kit">{{ __('Repository') }}</x-sidebar.navlist-item>
-                    <x-sidebar.navlist-item icon="open-book" target="_blank" href="https://turbo-laravel.com">{{ __('Documentation') }}</x-sidebar.navlist-item>
+                    <x-sidebar.navlist-item icon="book-open" target="_blank" href="https://turbo-laravel.com">{{ __('Documentation') }}</x-sidebar.navlist-item>
                 </x-sidebar.navlist>
             </x-slot>
         </x-drawer>

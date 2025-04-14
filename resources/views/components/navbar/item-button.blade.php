@@ -2,7 +2,7 @@
 
 <button {{ $attributes->merge(['class' => 'btn btn-ghost', 'type' => $type]) }}>
     @if ($icon)
-    <x-dynamic-component :component="'icons.'.$icon" size="lg" />
+    <x-dynamic-component :component="'heroicon-o-'.$icon" class="size-6" />
     @endif
 
     {{ $slot }}
