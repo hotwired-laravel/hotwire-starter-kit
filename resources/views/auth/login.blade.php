@@ -49,7 +49,7 @@
         @if (Route::has('register'))
             <div class="space-x-1 text-center text-sm text-base-600">
                 {{ __('Don\'t have an account?') }}
-                <x-link :href="route('register')" wire:navigate>{{ __('Sign up') }}</x-link>
+                <x-link :href="route('register')">{{ __('Sign up') }}</x-link>
             </div>
         @endif
     </div>
