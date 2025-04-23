@@ -4,7 +4,7 @@
 
 A community-built starter kit to build [Hotwired](https://hotwired.dev/) apps with Laravel.
 
-Hotwire is an alternative approach to building modern web applications without using much JavaScript by sending HTML instead of JSON over the wire. It also comes ready to be integrated with [Hotwire Native](https://native.hotwired.dev/), which is a web-first framework for building native mobile apps. It provides you with all the tools you need to leverage your web app and build great mobile apps.
+Hotwire is an alternative approach to building modern web applications without using much JavaScript by sending HTML instead of JSON over the wire. It also comes ready to be integrated with [Hotwire Native](https://native.hotwired.dev/), which is a web-first framework for building native mobile apps (if you want to see an example [Native Android app](https://github.com/hotwired-laravel/hotwire-starter-kit-android-example)). It provides you with all the tools you need to leverage your web app and build great mobile apps.
 
 This Hotwire Starter Kit comes with [Turbo Laravel](https://turbo-laravel.com/), [Tailwind CSS Laravel](https://github.com/tonysm/tailwindcss-laravel) and [Importmap Laravel](https://github.com/tonysm/importmap-laravel) for a #nobuild frontend setup (but it also works with Vite, if you want to use that), [Stimulus Laravel](https://github.com/hotwired-laravel/stimulus-laravel) to make it easier to make Stimulus controllers and Hotwire Native Bridge Components, it also comes with the [Hotwire Hotreload](https://github.com/hotwired-laravel/hotreload) package installed as a dev dependency to make development easier, and the [daisyUI](https://daisyui.com/) component library integrated.
 
