@@ -8,7 +8,7 @@
             'title' => $title,
         ])
     </head>
-    <body data-controller="sidebar theme" data-theme-active-class="btn-active [&_svg]:visible!" data-action="turbo:before-cache@document->sidebar#close">
+    <body data-controller="sidebar theme" data-layout="sidebar" data-theme-active-class="btn-active [&_svg]:visible!" data-action="turbo:before-cache@document->sidebar#close">
         <x-drawer id="main-sidebar">
             <x-slot name="checkbox">
                 <input id="main-sidebar" data-sidebar-target="checkbox" type="checkbox" class="drawer-toggle" />
@@ -40,7 +40,10 @@
                             <button type="submit" class="sr-only">{{ __('Update Theme') }}</button>
 
                             <div class="dropdown dropdown-top dropdown-right w-full">
-                                <x-sidebar.navlist-item icon="paint-brush" as="button" type="button" class="w-full">{{ __('Theme') }}</x-sidebar.navlist-item>
+                                <x-sidebar.navlist-item icon="paint-brush" as="button" type="button" class="w-full">
+                                    <span>{{ __('Theme') }}</span>
+                                    <x-heroicon-o-chevron-up-down class="size-4" />
+                                </x-sidebar.navlist-item>
 
                                 <ul tabindex="0" class="dropdown-content max-h-[50vh] [:where(&_li:empty)]:h-[0.1em] [:where(&_li:empty)]:bg-base-100/90 [:where(&_li:empty)]:my-2 [:where(&_li:empty)]:mx-1 overflow-y-auto bg-base-300 rounded-box z-1 w-52 p-2 shadow-2xl">
                                     <li class="menu-title text-xs">Theme</li>

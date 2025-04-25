@@ -8,7 +8,7 @@
             'title' => $title,
         ])
     </head>
-    <body data-controller="sidebar theme" data-theme-active-class="btn-active [&_svg]:visible!" data-action="turbo:before-cache@document->sidebar#close">
+    <body data-controller="sidebar theme" data-layout="header" data-theme-active-class="btn-active [&_svg]:visible!" data-action="turbo:before-cache@document->sidebar#close">
         <x-drawer id="main-sidebar">
             <x-slot name="checkbox">
                 <input id="main-sidebar" data-sidebar-target="checkbox" type="checkbox" class="drawer-toggle" />
