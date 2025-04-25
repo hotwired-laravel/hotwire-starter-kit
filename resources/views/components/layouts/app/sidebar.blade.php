@@ -47,7 +47,7 @@
 
                                 <ul tabindex="0" class="dropdown-content max-h-[50vh] [:where(&_li:empty)]:h-[0.1em] [:where(&_li:empty)]:bg-base-100/90 [:where(&_li:empty)]:my-2 [:where(&_li:empty)]:mx-1 overflow-y-auto bg-base-300 rounded-box z-1 w-52 p-2 shadow-2xl">
                                     <li class="menu-title text-xs">Theme</li>
-                                    @foreach (['default', 'light', 'dark', 'cupcake', 'synthwave', 'retro', 'halloween', 'forest', 'dracula', 'nord', 'silk', 'cyberpunk', 'valentine', 'emerald'] as $theme)
+                                    @foreach (['default', 'acid', 'autumn', 'aqua', 'bumblebee', 'business', 'caramellatte', 'cmyk', 'coffee', 'corporate', 'cupcake', 'cyberpunk', 'dark', 'dim', 'dracula', 'emerald', 'fantasy', 'forest', 'garden', 'halloween', 'light', 'lofi', 'luxury', 'night', 'nord', 'retro', 'silk', 'synthwave', 'valentine'] as $theme)
                                     <li>
                                         <button class="btn btn-ghost w-full flex gap-4 px-2" data-theme-target="button" type="submit" name="theme" value="{{ $theme }}">
                                             <div data-theme="{{ $theme }}" class="bg-base-100 grid shrink-0 grid-cols-2 gap-0.5 rounded-md p-1 shadow-sm">
