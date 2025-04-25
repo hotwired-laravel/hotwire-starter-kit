@@ -15,7 +15,8 @@
         </x-menu>
     </section>
 
-    <form action="{{ route('logout') }}" method="post" id="settings-logout" data-turbo-action="replace" data-action="submit->theme#clear">
+    <form action="{{ route('logout') }}" method="post" id="settings-logout" data-turbo-action="replace"
+        data-action="submit->theme#clear">
         @csrf
     </form>
 </x-layouts.app>
