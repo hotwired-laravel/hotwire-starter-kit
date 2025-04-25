@@ -28,6 +28,11 @@ export default class extends Controller {
         this.themeValue = event.submitter.value;
     }
 
+    clear() {
+        window.Turbo.cache.clear();
+        this.themeValue = null;
+    }
+
     themeValueChanged() {
         if (!this.themeValue || this.themeValue === "system") {
             this.#removeTheme();
