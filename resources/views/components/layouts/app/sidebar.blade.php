@@ -1,6 +1,6 @@
 @props(['transitions' => true, 'scalable' => false, 'title' => null])
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @if (session('theme')) data-theme="{{ session('theme') }}" @endif @class(["min-h-screen bg-base-300", "hotwire-native" => Turbo::isHotwireNativeVisit()]) >
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @if (session('theme')) data-theme="{{ session('theme') }}" @endif >
     <head>
         @include('partials.head', [
             'transitions' => $transitions,
@@ -8,7 +8,7 @@
             'title' => $title,
         ])
     </head>
-    <body data-controller="sidebar theme" data-layout="sidebar" data-theme-active-class="btn-active [&_svg]:visible!" data-action="turbo:before-cache@document->sidebar#close">
+    <body data-controller="sidebar theme" data-layout="sidebar" data-theme-active-class="btn-active [&_svg]:visible!" data-action="turbo:before-cache@document->sidebar#close" @class(["min-h-screen bg-base-300", "hotwire-native" => Turbo::isHotwireNativeVisit()])>
         <x-drawer id="main-sidebar">
             <x-slot name="checkbox">
                 <input id="main-sidebar" data-sidebar-target="checkbox" type="checkbox" class="drawer-toggle" />
