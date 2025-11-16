@@ -48,7 +48,7 @@
 
         @if (Route::has('register'))
             <div class="space-x-1 text-center text-sm text-base-600">
-                {{ __('Don\'t have an account?') }}
+                <span>{{ __('Don\'t have an account?') }}</span>
                 <x-link :href="route('register')">{{ __('Sign up') }}</x-link>
             </div>
         @endif
