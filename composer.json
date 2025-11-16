@@ -69,6 +69,10 @@
         "dev:overmind": [
             "Composer\\Config::disableProcessTimeout",
             "overmind start"
+        ],
+        "test": [
+            "@php artisan config:clear --ansi",
+            "@php artisan test"
         ]
     },
     "extra": {
