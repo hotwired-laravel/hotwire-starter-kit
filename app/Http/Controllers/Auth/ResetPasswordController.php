@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password as PasswordRule;
@@ -38,7 +37,7 @@ class ResetPasswordController extends Controller
             array_merge($request->only('email', 'password', 'password_confirmation'), ['token' => $token]),
             function ($user) use ($request) {
                 $user->forceFill([
-                    'password' => Hash::make($request->input('password')),
+                    'password' => $request->input('password'),
                     'remember_token' => Str::random(60),
                 ])->save();
 
