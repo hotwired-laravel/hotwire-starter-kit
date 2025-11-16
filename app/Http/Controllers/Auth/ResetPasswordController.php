@@ -48,7 +48,7 @@ class ResetPasswordController extends Controller
         // If the password was successfully reset, we will redirect the user back to
         // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
-        if ($status != Password::PasswordReset) {
+        if ($status !== Password::PasswordReset) {
             throw ValidationException::withMessages([
                 'email' => __($status),
             ]);
