@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HotwireNativeConfigurationController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\SettingsController;
@@ -28,25 +29,6 @@ Route::middleware(['auth'])->group(function () {
     Route::singleton('theme', ThemeController::class)->only(['update']);
 });
 
-Route::get('configurations/android_v1', function () {
-    return response()->json([
-        'patterns' => [
-            [
-                'patterns' => ['.*'],
-                'properties' => [
-                    'uri' => 'hotwire://fragment/web',
-                    'pull_to_refresh_enabled' => true,
-                ],
-            ],
-            [
-                'patterns' => ['/create/?$', '/edit/?$', '/delete/?$', '/login/?$'],
-                'properties' => [
-                    'context' => 'modal',
-                    'pull_to_refresh_enabled' => false,
-                ],
-            ],
-        ],
-    ]);
-});
+Route::get('configurations/android_v1', [HotwireNativeConfigurationController::class, 'index']);
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
