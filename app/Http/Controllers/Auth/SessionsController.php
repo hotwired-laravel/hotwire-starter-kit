@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Laravel\Fortify\Features;
 
 class SessionsController extends Controller
 {
@@ -33,13 +35,18 @@ class SessionsController extends Controller
 
         $this->ensureIsNotRateLimited($request);
 
-        if (! Auth::attempt($request->only(['email', 'password']), $request->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey($request));
+        $user = $this->validateCredentials($request);
 
-            throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
+        if (Features::enabled(Features::twoFactorAuthentication()) && $user->hasEnabledTwoFactorAuthentication()) {
+            Session::put([
+                'login.id' => $user->id,
+                'login.remember' => $request->boolean('remember'),
             ]);
+
+            return redirect()->route('two-factor.login');
         }
+
+        Auth::login($user);
 
         RateLimiter::clear($this->throttleKey($request));
         Session::regenerate();
@@ -90,6 +97,22 @@ class SessionsController extends Controller
      */
     protected function throttleKey(Request $request): string
     {
-        return Str::transliterate(Str::lower($request->input('email')).'|'.$request->ip());
+        return Str::transliterate(Str::lower($request->input('email')) . '|' . $request->ip());
+    }
+
+    private function validateCredentials(Request $request): User
+    {
+        /** @var User $user */
+        $user = Auth::getProvider()->retrieveByCredentials(['email' => $request->email, 'password' => $request->password]);
+
+        if (! $user || ! Auth::getProvider()->validateCredentials($user, ['password' => $request->password])) {
+            RateLimiter::hit($this->throttleKey($request));
+
+            throw ValidationException::withMessages([
+                'email' => __('auth.failed'),
+            ]);
+        }
+
+        return $user;
     }
 }
