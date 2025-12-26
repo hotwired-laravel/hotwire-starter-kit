@@ -1,4 +1,6 @@
 <x-layouts.app :title="__('Recovery codes')">
+    <x-turbo::exempts-page-from-cache />
+
     <section class="w-full lg:max-w-lg mx-auto">
         @unlesshotwirenative
         <x-back-link :href="route('settings.two-factor.edit')">{{ __('Two-factor authentication') }}</x-back-link>
@@ -45,6 +47,7 @@
                                         class="mt-4 grid gap-1 p-4 font-mono text-sm rounded-lg bg-zinc-100 dark:bg-white/5"
                                         role="list"
                                         aria-label="Recovery codes"
+                                        data-turbo-temporary
                                     >
                                         @foreach($recoveryCodes as $code)
                                             <div role="listitem" class="select-text">
@@ -53,7 +56,7 @@
                                         @endforeach
                                     </div>
 
-                                    <div class="mt-4">
+                                    <div class="mt-4" data-turbo-temporary>
                                         <p class="text-base-content/50 text-xs">{{ __('Each recovery code can be used once to access your account and will be removed after use. If you need more, click Regenerate Codes above.') }}</p>
                                     </div>
                                 </x-turbo::frame>
