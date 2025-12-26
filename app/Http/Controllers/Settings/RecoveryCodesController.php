@@ -11,7 +11,8 @@ class RecoveryCodesController extends Controller
     public function edit(Request $request)
     {
         return view('settings.recovery-codes.edit', [
-            'user' => $request->user(),
+            'user' => $user = $request->user(),
+            'recoveryCodes' => json_decode(decrypt($user->two_factor_recovery_codes), true),
         ]);
     }
 
@@ -19,6 +20,6 @@ class RecoveryCodesController extends Controller
     {
         $generateRecoveryCodes($request->user());
 
-        return redirect()->back(fallback: route('settings.recovery-codes.edit'))->with('notice', __('New recovery codes generated.'));
+        return redirect()->route('settings.recovery-codes.edit')->with('notice', __('New recovery codes generated.'));
     }
 }
