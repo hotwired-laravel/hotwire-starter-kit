@@ -3,7 +3,6 @@
 use App\Models\User;
 use Illuminate\Auth\Middleware\RequirePassword;
 use Illuminate\Support\Facades\Session;
-use Laravel\Fortify\Contracts\TwoFactorAuthenticationProvider;
 use Laravel\Fortify\Fortify;
 
 test('two factor authentication settings page can be accessed', function () {

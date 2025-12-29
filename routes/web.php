@@ -39,4 +39,4 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('configurations/android_v1', [HotwireNativeConfigurationController::class, 'index']);
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
