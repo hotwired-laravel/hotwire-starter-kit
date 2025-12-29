@@ -36,23 +36,22 @@
                     </div>
                 </div>
 
-                <form id="confirm-two-factor-form" action="{{ route('settings.confirmed-two-factor.update') }}" method="post" class="hidden peer-checked:flex flex-col items-start justify-start space-y-4">
+                <form id="confirm-two-factor-form" action="{{ route('settings.confirmed-two-factor.update') }}" method="post" class="w-full hidden peer-checked:flex flex-col items-start justify-start space-y-4">
                     @csrf
                     @method('PUT')
 
                     <p class="-translate-y-1 text-sm text-base-content dark:text-base-content/70">{{ __('Enter the 6-digit code from your authenticator app.') }}</p>
 
-                    <div>
+                    <div class="w-full">
                         <x-form.label for="code" class="sr-only">{{ __('Code') }}</x-form.label>
 
-                        <x-form.text-input id="code" type="text" name="code" :value="old('code')" :data-error="$errors->has('code')"
-                            required autofocus autocomplete="off" />
+                        <x-form.otp-input id="code" name="code" :value="old('code')" :data-error="$errors->has('code')" />
 
                         <x-form.error :message="$errors->first('code')" />
                     </div>
 
                     <div class="flex items-center justify-between space-x-4">
-                        <label for="continue" role="button" class="btn btn-block">{{ __('Back') }}</label>
+                        <label for="continue" role="button" class="btn btn-block">{{ __('Cancel') }}</label>
 
                         <button type="submit" class="btn btn-block btn-primary">
                             {{ __('Confirm') }}
