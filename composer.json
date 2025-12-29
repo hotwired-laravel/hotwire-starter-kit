@@ -59,7 +59,7 @@
             "@php artisan key:generate --ansi",
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan tailwindcss:download --force",
-            "@php artisan tailwindcss:build",
+            "@php artisan tailwindcss:build --no-tty",
             "@php artisan storage:link",
             "@php artisan migrate --graceful --ansi"
         ],
