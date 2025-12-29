@@ -9,6 +9,9 @@ use Laravel\Fortify\Actions\EnableTwoFactorAuthentication;
 
 class TwoFactorController extends Controller
 {
+    /**
+     * Show the form for enabling two-factor authentication.
+     */
     public function edit(Request $request)
     {
         return view('settings.two-factor.edit', [
@@ -16,6 +19,9 @@ class TwoFactorController extends Controller
         ]);
     }
 
+    /**
+     * Enable two-factor authentication for the user.
+     */
     public function update(Request $request, EnableTwoFactorAuthentication $enableTwoFactor)
     {
         $enableTwoFactor($request->user());
@@ -23,6 +29,9 @@ class TwoFactorController extends Controller
         return redirect()->route('settings.confirmed-two-factor.edit');
     }
 
+    /**
+     * Disable two-factor authentication for the user.
+     */
     public function destroy(Request $request, DisableTwoFactorAuthentication $disableTwoFactor)
     {
         $disableTwoFactor($request->user());

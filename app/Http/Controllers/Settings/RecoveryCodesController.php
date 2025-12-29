@@ -8,6 +8,9 @@ use Laravel\Fortify\Actions\GenerateNewRecoveryCodes;
 
 class RecoveryCodesController extends Controller
 {
+    /**
+     * Show the form for managing recovery codes.
+     */
     public function edit(Request $request)
     {
         return view('settings.recovery-codes.edit', [
@@ -16,6 +19,9 @@ class RecoveryCodesController extends Controller
         ]);
     }
 
+    /**
+     * Generate new recovery codes for the user.
+     */
     public function update(Request $request, GenerateNewRecoveryCodes $generateRecoveryCodes)
     {
         $generateRecoveryCodes($request->user());
