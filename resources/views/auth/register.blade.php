@@ -54,7 +54,7 @@
         </form>
 
         <div class="space-x-1 text-center text-sm text-base-600">
-            {{ __('Already have an account?') }}
+            <span>{{ __('Already have an account?') }}</span>
             <x-link :href="route('login')">{{ __('Log in') }}</x-link>
         </div>
     </div>

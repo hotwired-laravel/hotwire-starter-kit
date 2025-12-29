@@ -23,7 +23,7 @@
         </form>
 
         <div class="space-x-1 text-center text-sm text-base-400">
-            {{ __('Or, return to') }}
+            <span>{{ __('Or, return to') }}</span>
             <x-link :href="route('login')">{{ __('log in') }}</x-link>
         </div>
     </div>
