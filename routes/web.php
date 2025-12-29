@@ -9,6 +9,7 @@ use App\Http\Controllers\Settings\TwoFactorController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ThemeController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\Features;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,11 +28,13 @@ Route::middleware(['auth'])->group(function () {
         Route::post('profile/delete', [ProfileController::class, 'destroy'])->name('profile.destroy');
         Route::singleton('password', PasswordController::class)->only(['edit', 'update']);
 
-        Route::middleware('password.confirm')->group(function () {
-            Route::singleton('two-factor', TwoFactorController::class)->destroyable()->only(['edit', 'update', 'destroy']);
-            Route::singleton('confirmed-two-factor', ConfirmedTwoFactorController::class)->only(['edit', 'update']);
-            Route::singleton('recovery-codes', RecoveryCodesController::class)->only(['edit', 'update']);
-        });
+        if (Features::canManageTwoFactorAuthentication()) {
+            Route::middleware(when(Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword'), ['password.confirm'], []))->group(function () {
+                Route::singleton('two-factor', TwoFactorController::class)->destroyable()->only(['edit', 'update', 'destroy']);
+                Route::singleton('confirmed-two-factor', ConfirmedTwoFactorController::class)->only(['edit', 'update']);
+                Route::singleton('recovery-codes', RecoveryCodesController::class)->only(['edit', 'update']);
+            });
+        }
     });
 
     Route::singleton('theme', ThemeController::class)->only(['update']);
@@ -39,4 +42,4 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('configurations/android_v1', [HotwireNativeConfigurationController::class, 'index']);
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

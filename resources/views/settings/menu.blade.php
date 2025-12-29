@@ -7,7 +7,9 @@
         <x-menu>
             <x-menu.link icon="user" :href="route('settings.profile.edit')">{{ __('Edit profile') }}</x-menu.link>
             <x-menu.link icon="key" :href="route('settings.password.edit')">{{ __('Change password') }}</x-menu.link>
+            @if (\Laravel\Fortify\Features::canManageTwoFactorAuthentication())
             <x-menu.link icon="lock-closed" :href="route('settings.two-factor.edit')">{{ __('Two-factor authentication') }}</x-menu.link>
+            @endif
             <x-menu.link icon="trash" :href="route('settings.profile.delete')">{{ __('Delete profile') }}</x-menu.link>
         </x-menu>
 
