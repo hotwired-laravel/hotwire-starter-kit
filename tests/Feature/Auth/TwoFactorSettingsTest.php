@@ -75,7 +75,7 @@ test('cannot confirm two factor with invalid code', function ($code) {
 ]);
 
 test('can view recovery codes', function () {
-    $user = createUserWithTwoFactorEnabled();
+    $user = User::factory()->withTwoFactorAuthenticationEnabled()->create();
 
     $this->actingAs($user)
         ->get(route('settings.recovery-codes.edit'))
@@ -83,7 +83,7 @@ test('can view recovery codes', function () {
 });
 
 test('can regenerate recovery codes', function () {
-    $user = createUserWithTwoFactorEnabled();
+    $user = User::factory()->withTwoFactorAuthenticationEnabled()->create();
 
     $originalRecoveryCodes = $user->two_factor_recovery_codes;
 
@@ -96,7 +96,7 @@ test('can regenerate recovery codes', function () {
 });
 
 test('user with two factor authentication enabled is redirected to challenge on login', function () {
-    $user = createUserWithTwoFactorEnabled();
+    $user = User::factory()->withTwoFactorAuthenticationEnabled()->create();
 
     $response = $this->post('/login', [
         'email' => $user->email,
@@ -108,7 +108,7 @@ test('user with two factor authentication enabled is redirected to challenge on 
 });
 
 test('can login with two factor code', function () {
-    $user = createUserWithTwoFactorEnabled();
+    $user = User::factory()->withTwoFactorAuthenticationEnabled()->create();
 
     // Set up session as if user just entered credentials
     Session::put([
@@ -130,7 +130,7 @@ test('can login with two factor code', function () {
 });
 
 test('can disable two factor authentication', function () {
-    $user = createUserWithTwoFactorEnabled();
+    $user = User::factory()->withTwoFactorAuthenticationEnabled()->create();
 
     $this->actingAs($user)
         ->delete(route('settings.two-factor.destroy'));
@@ -141,28 +141,3 @@ test('can disable two factor authentication', function () {
     $this->assertNull($user->two_factor_confirmed_at);
     $this->assertNull($user->two_factor_recovery_codes);
 });
-
-function createUserWithTwoFactorEnabled(): User
-{
-    $secretLength = (int) config('fortify-options.two-factor-authentication.secret-length', 16);
-
-    $user = User::factory()->create();
-
-    // Enable two-factor authentication for the user
-    $user->forceFill([
-        'two_factor_secret' => Fortify::currentEncrypter()->encrypt(resolve(TwoFactorAuthenticationProvider::class)->generateSecretKey($secretLength)),
-        'two_factor_recovery_codes' => encrypt(json_encode([
-            'recovery-code-1',
-            'recovery-code-2',
-            'recovery-code-3',
-            'recovery-code-4',
-            'recovery-code-5',
-            'recovery-code-6',
-            'recovery-code-7',
-            'recovery-code-8',
-        ])),
-        'two_factor_confirmed_at' => now(),
-    ])->save();
-
-    return $user;
-}
