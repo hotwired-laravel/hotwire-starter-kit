@@ -11,7 +11,7 @@ test('login screen can be rendered', function () {
 test('users can authenticate using the login screen', function () {
     $user = User::factory()->create();
 
-    $this->post(route('login'), [
+    $this->post(route('login.store'), [
         'email' => $user->email,
         'password' => 'password',
     ])->assertValid()->assertRedirect(route('dashboard'));
@@ -22,7 +22,7 @@ test('users can authenticate using the login screen', function () {
 test('users can not authenticate with invalid password', function () {
     $user = User::factory()->create();
 
-    $this->post('/login', [
+    $this->post(route('login.store'), [
         'email' => $user->email,
         'password' => 'wrong-password',
     ]);

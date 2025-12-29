@@ -69,7 +69,7 @@
             </form>
         </x-page-card>
 
-        <form action="{{ route('verification.resend') }}" method="post" id="resend-email-verification">
+        <form action="{{ route('verification.send') }}" method="post" id="resend-email-verification">
             @csrf
         </form>
     </section>

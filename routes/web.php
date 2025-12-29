@@ -11,9 +11,7 @@ use App\Http\Controllers\ThemeController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::view('/', 'welcome')->name('home');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
@@ -41,5 +39,3 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('configurations/android_v1', [HotwireNativeConfigurationController::class, 'index']);
-
-require __DIR__.'/auth.php';

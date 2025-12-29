@@ -8,7 +8,7 @@ test('confirm password screen can be rendered', function () {
     $user = User::factory()->create();
 
     $this->actingAs($user)
-        ->get('/confirm-password')
+        ->get('/user/confirm-password')
         ->assertOk();
 });
 

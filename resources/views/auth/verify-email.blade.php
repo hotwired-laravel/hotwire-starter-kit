@@ -11,7 +11,7 @@
         @endif
 
         <div class="flex flex-col items-center justify-between space-y-3">
-            <form action="{{ route('verification.resend') }}" method="post">
+            <form action="{{ route('verification.send') }}" method="post">
                 @csrf
 
                 <x-form.button.primary class="w-full">
