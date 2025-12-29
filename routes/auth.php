@@ -4,20 +4,10 @@ use App\Http\Controllers\Auth\ConfirmPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\Auth\SessionsController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    Route::get('login', [SessionsController::class, 'create'])
-        ->name('login');
-
-    Route::post('login', [SessionsController::class, 'store'])
-        ->name('login.store');
-
-    Route::post('logout', [SessionsController::class, 'destroy'])
-        ->name('logout');
-
     Route::get('register', [RegistrationController::class, 'create'])
         ->name('register');
 
@@ -56,6 +46,3 @@ Route::middleware('auth')->group(function () {
         ->middleware('throttle:6,1')
         ->name('password.confirm.store');
 });
-
-Route::post('logout', [SessionsController::class, 'destroy'])
-    ->name('logout');

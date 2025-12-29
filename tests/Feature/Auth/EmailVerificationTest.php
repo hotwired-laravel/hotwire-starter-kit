@@ -31,6 +31,7 @@ test('email can be verified', function () {
     Event::assertDispatched(Verified::class);
 
     expect($user->fresh()->hasVerifiedEmail())->toBeTrue();
+
     $response->assertRedirect(route('dashboard', absolute: false))
         ->assertSessionHas('notice');
 });
