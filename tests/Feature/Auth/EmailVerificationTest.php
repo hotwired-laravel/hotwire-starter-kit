@@ -10,7 +10,7 @@ uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 test('email verification screen can be rendered', function () {
     $user = User::factory()->unverified()->create();
 
-    $response = $this->actingAs($user)->get('/verify-email');
+    $response = $this->actingAs($user)->get('/email/verify');
 
     $response->assertStatus(200);
 });
@@ -32,8 +32,7 @@ test('email can be verified', function () {
 
     expect($user->fresh()->hasVerifiedEmail())->toBeTrue();
 
-    $response->assertRedirect(route('dashboard', absolute: false))
-        ->assertSessionHas('notice');
+    $response->assertRedirect(route('dashboard', ['verified' => 1], absolute: false));
 });
 
 test('email is not verified with invalid hash', function () {
