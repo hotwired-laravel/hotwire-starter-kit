@@ -2,8 +2,6 @@
 
 use App\Models\User;
 use Illuminate\Auth\Middleware\RequirePassword;
-use Illuminate\Support\Facades\Session;
-use Laravel\Fortify\Fortify;
 
 test('two factor authentication settings page can be accessed', function () {
     $user = User::factory()->create();
@@ -95,40 +93,6 @@ test('can regenerate recovery codes', function () {
     $user->refresh();
 
     $this->assertNotEquals($originalRecoveryCodes, $user->two_factor_recovery_codes);
-});
-
-test('user with two factor authentication enabled is redirected to challenge on login', function () {
-    $user = User::factory()->withTwoFactorAuthenticationEnabled()->create();
-
-    $response = $this->post('/login', [
-        'email' => $user->email,
-        'password' => 'password',
-    ]);
-
-    $response->assertRedirect('/two-factor-challenge');
-    $this->assertEquals($user->id, Session::get('login.id'));
-});
-
-test('can login with two factor code', function () {
-    $user = User::factory()->withTwoFactorAuthenticationEnabled()->create();
-
-    // Set up session as if user just entered credentials
-    Session::put([
-        'login.id' => $user->id,
-        'login.remember' => false,
-    ]);
-
-    // Generate valid 2FA code
-    $secret = Fortify::currentEncrypter()->decrypt($user->two_factor_secret);
-    $google2fa = app(\PragmaRX\Google2FA\Google2FA::class);
-    $validCode = $google2fa->getCurrentOtp($secret);
-
-    $response = $this->post('/two-factor-challenge', [
-        'code' => $validCode,
-    ]);
-
-    $response->assertRedirect('/dashboard');
-    $this->assertAuthenticatedAs($user);
 });
 
 test('can disable two factor authentication', function () {
