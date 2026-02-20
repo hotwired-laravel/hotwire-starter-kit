@@ -28,7 +28,7 @@
                         <input class="input join-item" name="setup_code" type="text" data-clipboard-target="source" value="{{ $setupCode }}" readonly />
 
                         <button type="button" class="btn join-item rounded-r-full" data-action="clipboard#copy">
-                            <x-heroicon-o-clipboard class="group-data-[clipboard-copied-value=true]:hidden h-4 w-4 text-white" />
+                            <x-heroicon-o-clipboard class="group-data-[clipboard-copied-value=true]:hidden h-4 w-4 text-content-base" />
                             <x-heroicon-o-check class="hidden group-data-[clipboard-copied-value=true]:inline text-green-500 h-4 w-4" />
 
                             <span class="sr-only">{{ __('Copy') }}</span>
@@ -36,7 +36,7 @@
                     </div>
                 </div>
 
-                <form id="confirm-two-factor-form" action="{{ route('settings.confirmed-two-factor.update') }}" method="post" class="w-full hidden peer-checked:flex flex-col items-start justify-start space-y-4">
+                <form id="confirm-two-factor-form" action="{{ route('settings.confirmed-two-factor.update') }}" method="post" class="block w-full hidden peer-checked:flex flex-col items-start justify-start space-y-4">
                     @csrf
                     @method('PUT')
 
@@ -50,12 +50,14 @@
                         <x-form.error :message="$errors->first('code')" />
                     </div>
 
-                    <div class="flex items-center justify-between space-x-4">
-                        <label for="continue" role="button" class="btn btn-block">{{ __('Cancel') }}</label>
+                    <div class="w-full">
+                        <div class="grid grid-cols-2 gap-4">
+                            <label for="continue" role="button" class="btn btn-block">{{ __('Cancel') }}</label>
 
-                        <button type="submit" class="btn btn-block btn-primary">
-                            {{ __('Confirm') }}
-                        </button>
+                            <button type="submit" class="btn btn-block btn-primary">
+                                {{ __('Confirm') }}
+                            </button>
+                        </div>
                     </div>
                 </form>
             </x-turbo::frame>

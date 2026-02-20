@@ -28,3 +28,7 @@
 [data-bridge-components~="form"] [data-controller~="bridge--form"]:not([data-controller-optout-android~="bridge--form"]) [type="submit"] {
     @apply hidden;
 }
+
+main {
+    scrollbar-gutter: stable both;
+}

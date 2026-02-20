@@ -1,13 +1,13 @@
 @props(['id', 'asideWidth' => 'w-64'])
 
-<div class="drawer">
+<div {{ $attributes->merge(['class' => 'drawer']) }}>
     @if ($checkbox ?? false)
         {{ $checkbox }}
     @else
         <input id="{{ $id }}" type="checkbox" class="drawer-toggle" />
     @endif
 
-    <div class="drawer-content">
+    <div class="drawer-content isolate">
         {{ $slot }}
     </div>
 

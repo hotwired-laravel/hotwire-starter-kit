@@ -15,7 +15,7 @@
             </x-slot>
 
             @unlesshotwirenative
-                <header class="min-h-14 flex items-center border-b border-base-300 bg-base-100">
+                <header class="min-h-14 z-10 flex items-center sticky top-0 border-b border-base-300 bg-base-200/90 [transform:translate3d(0,0,0)] backdrop-blur transition-shadow duration-100 shadow-xs">
                     <div class="mx-auto w-full h-full [:where(&)]:max-w-7xl px-6 lg:px-8 flex items-center">
                         <x-drawer.toggle for="main-sidebar" icon="bars-3" class="lg:hidden px-2.5 [&>div>svg]:size-5! [&>div>svg]:mr-0! h-10" />
 
@@ -97,11 +97,13 @@
                 </header>
             @endunlesshotwirenative
 
-            @include('partials.notifications')
+            <main class="w-full overflow-y-auto md:max-w-7xl mx-auto">
+                @include('partials.notifications')
 
-            <div>
-                {{ $slot }}
-            </div>
+                <div class="isolate min-h-screen overflow-auto flex-1 rounded md:rounded-0 shadow bg-base-200 md:border md:dark:border-white/5 md:border-black/10">
+                    {{ $slot }}
+                </div>
+            </main>
 
             <x-slot name="aside">
                 <div class="flex items-center space-x-2">
