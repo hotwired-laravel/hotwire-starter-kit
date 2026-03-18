@@ -17,16 +17,10 @@ laravel new my-app --using=hotwired-laravel/hotwire-starter-kit
 
 ### Local Development
 
-We ship with [Solo](https://github.com/soloterm/solo) by default. To start the processes, you may run:
+We ship with a [Procfile](./Procfile) so you may run it with [foreman](https://github.com/ddollar/foreman) or [node-foreman](https://github.com/strongloop/node-foreman) or, our recommended way since it only requires a single binary, using [Overmind](https://github.com/DarthSim/overmind). Download the binary, put it somewhere registered in your `$PATH` var, then run:
 
 ```bash
 composer run dev
-```
-
-But we also ship with a [Procfile](./Procfile) so you may run it with [foreman](https://github.com/ddollar/foreman) or [node-foreman](https://github.com/strongloop/node-foreman) or, our recommended way since it only requires a single binary, using [Overmind](https://github.com/DarthSim/overmind). Download the binary, put it somewhere registered in your `$PATH` var, then run:
-
-```bash
-composer run dev:overmind
 ```
 
 ### Deployment
