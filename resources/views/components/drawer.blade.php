@@ -7,7 +7,7 @@
         <input id="{{ $id }}" type="checkbox" class="drawer-toggle" />
     @endif
 
-    <div class="drawer-content isolate">
+    <div class="drawer-content isolate flex flex-col min-h-screen">
         {{ $slot }}
     </div>
 
