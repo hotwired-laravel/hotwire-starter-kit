@@ -15,7 +15,7 @@
             </x-slot>
 
             @unlesshotwirenative
-                <header class="min-h-14 z-10 flex items-center sticky top-0 border-b border-base-300 bg-base-200/90 [transform:translate3d(0,0,0)] backdrop-blur transition-shadow duration-100 shadow-xs">
+                <header class="min-h-14 z-10 flex items-center sticky top-0 border-b border-black/10 dark:border-white/5 bg-base-300/90 [transform:translate3d(0,0,0)] backdrop-blur transition-shadow duration-100 shadow-xs">
                     <div class="mx-auto w-full h-full [:where(&)]:max-w-7xl px-6 lg:px-8 flex items-center">
                         <x-drawer.toggle for="main-sidebar" icon="bars-3" class="lg:hidden px-2.5 [&>div>svg]:size-5! [&>div>svg]:mr-0! h-10" />
 
@@ -51,7 +51,7 @@
                                 <button type="submit" class="sr-only">{{ __('Update Theme') }}</button>
 
                                 <div class="dropdown dropdown-end">
-                                    <x-navbar.item-button icon="paint-brush" class="px-2.5 [&>div>svg]:size-5! [&>div>svg]:mr-0! h-10 max-lg:hidden">
+                                    <x-navbar.item-button icon="paint-brush" class="px-2.5 [&>div>svg]:size-5! [&>div>svg]:mr-0! h-10">
                                         <span class="sr-only">{{ __('Theme') }}</span>
                                     </x-navbar.item-button>
 
@@ -97,10 +97,10 @@
                 </header>
             @endunlesshotwirenative
 
-            <main class="w-full overflow-y-auto md:max-w-7xl mx-auto">
+            <main class="w-full flex-1 flex flex-col overflow-y-auto">
                 @include('partials.notifications')
 
-                <div class="isolate min-h-screen overflow-auto flex-1 rounded md:rounded-0 shadow bg-base-200 md:border md:dark:border-white/5 md:border-black/10">
+                <div class="isolate overflow-auto flex-1 flex flex-col mx-auto w-full [:where(&)]:max-w-7xl px-6 lg:px-8">
                     {{ $slot }}
                 </div>
             </main>
