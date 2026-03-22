@@ -152,10 +152,10 @@
                     </div>
                 </aside>
 
-                <main class="flex-1 min-h-screen overflow-auto">
+                <main class="flex-1 flex flex-col min-h-screen overflow-auto bg-base-200">
                     @include('partials.notifications')
 
-                    <div class="min-h-screen overflow-auto flex-1 bg-base-200">
+                    <div class="overflow-auto flex-1 flex flex-col">
                         {{ $slot }}
                     </div>
                 </main>
