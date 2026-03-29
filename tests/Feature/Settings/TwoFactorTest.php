@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Auth\Middleware\RequirePassword;
+use PragmaRX\Google2FA\Google2FA;
 
 test('two factor authentication settings page can be accessed', function () {
     $user = User::factory()->create();
@@ -30,7 +31,7 @@ test('two factor authentication can be confirmed', function () {
 
     // Get the secret and generate a valid code
     $secret = decrypt($user->two_factor_secret);
-    $google2fa = app(\PragmaRX\Google2FA\Google2FA::class);
+    $google2fa = app(Google2FA::class);
     $validCode = $google2fa->getCurrentOtp($secret);
 
     // Confirm 2FA with valid code

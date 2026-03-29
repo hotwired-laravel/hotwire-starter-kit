@@ -3,6 +3,7 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Session;
 use Laravel\Fortify\Fortify;
+use PragmaRX\Google2FA\Google2FA;
 
 test('user with two factor authentication enabled is redirected to challenge on login', function () {
     $user = User::factory()->withTwoFactorAuthenticationEnabled()->create();
@@ -27,7 +28,7 @@ test('can login with two factor code', function () {
 
     // Generate valid 2FA code
     $secret = Fortify::currentEncrypter()->decrypt($user->two_factor_secret);
-    $google2fa = app(\PragmaRX\Google2FA\Google2FA::class);
+    $google2fa = app(Google2FA::class);
     $validCode = $google2fa->getCurrentOtp($secret);
 
     $response = $this->post('/two-factor-challenge', [
