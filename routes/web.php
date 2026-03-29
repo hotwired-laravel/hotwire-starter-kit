@@ -12,11 +12,11 @@ use Laravel\Fortify\Features;
 
 Route::view('/', 'welcome')->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
-
 Route::middleware(['auth'])->group(function () {
+    Route::middleware('verified')->group(function () {
+        Route::view('dashboard', 'dashboard')->name('dashboard');
+    });
+
     Route::get('settings', [SettingsController::class, 'show'])->name('settings');
 
     Route::prefix('settings')->as('settings.')->group(function () {
@@ -33,7 +33,6 @@ Route::middleware(['auth'])->group(function () {
             });
         }
     });
-
 });
 
 Route::get('configurations/android_v1', [HotwireNativeConfigurationController::class, 'index']);
