@@ -13,7 +13,7 @@
                 <x-form.label for="password">{{ __('Password') }}</x-form.label>
 
                 <x-form.password-input id="password" name="password" required autocomplete="current-password"
-                    :placeholder="__('Password')" :data-error="$errors->has('password')" class="mt-2" />
+                    :placeholder="__('Password')" autofocus :data-error="$errors->has('password')" class="mt-2" />
 
                 <x-form.error :message="$errors->first('password')" />
             </div>
