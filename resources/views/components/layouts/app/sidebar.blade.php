@@ -14,9 +14,9 @@
                 <input id="main-sidebar" data-sidebar-target="checkbox" type="checkbox" class="drawer-toggle" />
             </x-slot>
 
-            <div class="w-full h-screen md:flex">
+            <div class="w-full h-screen lg:flex">
                 {{--- Desktop nav ---}}
-                <aside class="hidden md:flex md:flex-col max-w-[250px] w-full p-4 space-y-1 border-r border-black/10 dark:border-white/5">
+                <aside class="hidden lg:flex lg:flex-col max-w-[250px] w-full p-4 space-y-1 border-r border-black/10 dark:border-white/5">
                     <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
                         <x-app-logo />
                     </a>
@@ -88,10 +88,10 @@
                 </aside>
 
                 {{--- Mobile nav ---}}
-                <aside class="flex flex-col md:hidden pl-4 pr-6 py-4 space-y-1 bg-base-300/90 text-base-content sticky top-0 z-30 h-16 w-full [transform:translate3d(0,0,0)] backdrop-blur transition-shadow duration-100 shadow-xs">
+                <aside class="flex flex-col lg:hidden pl-4 pr-6 py-4 space-y-1 bg-base-300/90 text-base-content sticky top-0 z-30 h-16 w-full [transform:translate3d(0,0,0)] backdrop-blur transition-shadow duration-100 shadow-xs">
                     <div class="flex items-center space-x-2 justify-between">
                         <div class="flex items-center space-x-2">
-                            <x-drawer.toggle for="main-sidebar" icon="bars-3" class="md:hidden px-2.5 [&>div>svg]:size-5! [&>div>svg]:mr-0! h-10" />
+                            <x-drawer.toggle for="main-sidebar" icon="bars-3" class="lg:hidden px-2.5 [&>div>svg]:size-5! [&>div>svg]:mr-0! h-10" />
 
                             <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
                                 <x-app-logo />
@@ -163,7 +163,7 @@
 
             <x-slot name="aside">
                 <div class="flex items-center space-x-2 z-10">
-                    <x-drawer.toggle for="main-sidebar" icon="x-mark" class="md:hidden px-2 [&>div>svg]:size-5! [&>div>svg]:mr-0! h-10" />
+                    <x-drawer.toggle for="main-sidebar" icon="x-mark" class="lg:hidden px-2 [&>div>svg]:size-5! [&>div>svg]:mr-0! h-10" />
                 </div>
 
                 <a href="{{ route('dashboard') }}" class="flex items-center space-x-2 px-1.5 my-4">
