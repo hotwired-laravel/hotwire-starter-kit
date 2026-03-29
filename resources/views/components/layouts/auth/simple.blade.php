@@ -1,6 +1,6 @@
 @props(['transitions' => true, 'scalable' => false, 'title' => null])
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @if (session('theme')) data-theme="{{ session('theme') }}" @endif  >
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" >
     <head>
         @include('partials.head', [
             'transitions' => $transitions,

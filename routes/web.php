@@ -7,7 +7,6 @@ use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\RecoveryCodesController;
 use App\Http\Controllers\Settings\TwoFactorController;
 use App\Http\Controllers\SettingsController;
-use App\Http\Controllers\ThemeController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -35,7 +34,6 @@ Route::middleware(['auth'])->group(function () {
         }
     });
 
-    Route::singleton('theme', ThemeController::class)->only(['update']);
 });
 
 Route::get('configurations/android_v1', [HotwireNativeConfigurationController::class, 'index']);

@@ -89,15 +89,8 @@ export default class extends Controller {
         this.#updateActiveThemeButtons();
     }
 
-    updateFromSubmit(event) {
-        window.Turbo.cache.clear();
-
-        this.themeValue = event.submitter.value;
-    }
-
-    clear() {
-        window.Turbo.cache.clear();
-        this.themeValue = null;
+    update(event) {
+        this.themeValue = event.currentTarget.value;
     }
 
     themeValueChanged() {
