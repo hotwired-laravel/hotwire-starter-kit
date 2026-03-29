@@ -4,7 +4,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 @if ($transitions ?? false)
-    <meta name="view-transition" content="same-origin">
+    <meta name="view-transition" content="same-origin" />
 @endif
 
 <title>{{ $title ?? config('app.name') }}</title>
@@ -13,5 +13,25 @@
 <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
 <link href="{{ tailwindcss('css/app.css') }}" rel="stylesheet" data-turbo-track="reload" />
+
+<script>
+    window.AppTheme = {
+        applyTheme(theme) {
+            if (!theme || theme === 'default') {
+                window.localStorage.removeItem('app.theme')
+                document.documentElement.removeAttribute('data-theme')
+            } else {
+                window.localStorage.setItem('app.theme', theme)
+                document.documentElement.setAttribute('data-theme', theme)
+            }
+        },
+
+        get currentTheme() {
+            return window.localStorage.getItem('app.theme') || 'default'
+        }
+    }
+
+    window.AppTheme.applyTheme(window.localStorage.getItem('app.theme'));
+</script>
 
 <x-importmap::tags />

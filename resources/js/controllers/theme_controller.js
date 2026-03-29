@@ -1,7 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
 
-const LOCAL_STORAGE_KEY = "theme";
-
 const THEMES = [
     "default",
     "abyss",
@@ -52,9 +50,7 @@ export default class extends Controller {
     static classes = ["active"];
 
     initialize() {
-        if (window.localStorage.getItem(LOCAL_STORAGE_KEY)) {
-            this.themeValue = window.localStorage.getItem(LOCAL_STORAGE_KEY);
-        }
+        this.themeValue = window.AppTheme.currentTheme;
     }
 
     connect() {
@@ -94,12 +90,7 @@ export default class extends Controller {
     }
 
     themeValueChanged() {
-        if (!this.themeValue || this.themeValue === "system") {
-            this.#removeTheme();
-        } else {
-            this.#applyTheme(this.themeValue);
-        }
-
+        window.AppTheme.applyTheme(this.themeValue);
         this.#updateActiveThemeButtons();
     }
 
@@ -109,15 +100,5 @@ export default class extends Controller {
                 ? btn.classList.add(...this.activeClasses)
                 : btn.classList.remove(...this.activeClasses),
         );
-    }
-
-    #removeTheme() {
-        window.localStorage.removeItem(LOCAL_STORAGE_KEY);
-        document.documentElement.removeAttribute("data-theme");
-    }
-
-    #applyTheme(theme) {
-        window.localStorage.setItem(LOCAL_STORAGE_KEY, theme);
-        document.documentElement.setAttribute("data-theme", theme);
     }
 }
