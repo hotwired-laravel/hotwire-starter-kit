@@ -1,6 +1,7 @@
 @props([
     'digits' => 6,
     'name' => 'code',
+    'autofocus' => false,
 ])
 
 <div
@@ -18,6 +19,7 @@
                 pattern="[0-9]"
                 maxlength="1"
                 autocomplete="off"
+                @if ($autofocus && $x === 0) autofocus @endif
                 data-action="paste->otp#handlePaste keydown->otp#handleKeydown focus->otp#handleFocus input->otp#sanitizeInput"
                 class="h-10 w-10 input text-center text-sm font-medium @if($x == 0) rounded-l-md @endif @if($x == $digits - 1) rounded-r-md @endif @if($x > 0) -ml-px @endif" />
         @endfor

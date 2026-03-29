@@ -45,7 +45,8 @@
                     <div class="w-full">
                         <x-form.label for="code" class="sr-only">{{ __('Code') }}</x-form.label>
 
-                        <x-form.otp-input id="code" name="code" :value="old('code')" :data-error="$errors->has('code')" />
+                        <x-form.otp-input id="code" name="code" :value="old('code')"
+                            autofocus :data-error="$errors->has('code')" />
 
                         <x-form.error :message="$errors->first('code')" />
                     </div>
