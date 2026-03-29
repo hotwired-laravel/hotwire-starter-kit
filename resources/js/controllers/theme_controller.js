@@ -2,9 +2,48 @@ import { Controller } from "@hotwired/stimulus";
 
 const LOCAL_STORAGE_KEY = "theme";
 
+const THEMES = [
+    "default",
+    "abyss",
+    "acid",
+    "aqua",
+    "autumn",
+    "black",
+    "bumblebee",
+    "business",
+    "caramellatte",
+    "cmyk",
+    "coffee",
+    "corporate",
+    "cupcake",
+    "cyberpunk",
+    "dark",
+    "dim",
+    "dracula",
+    "emerald",
+    "fantasy",
+    "forest",
+    "garden",
+    "halloween",
+    "lemonade",
+    "light",
+    "lofi",
+    "luxury",
+    "night",
+    "nord",
+    "pastel",
+    "retro",
+    "silk",
+    "sunset",
+    "synthwave",
+    "valentine",
+    "winter",
+    "wireframe",
+];
+
 // Connects to data-controller="theme"
 export default class extends Controller {
-    static targets = ["button"];
+    static targets = ["button", "switcher", "template"];
 
     static values = {
         theme: { type: String },
@@ -19,6 +58,34 @@ export default class extends Controller {
     }
 
     connect() {
+        this.#updateActiveThemeButtons();
+    }
+
+    switcherTargetConnected(ul) {
+        const template = this.templateTargets.find((t) =>
+            ul.contains(t),
+        );
+
+        if (!template) return;
+
+        THEMES.forEach((theme) => {
+            const clone = template.content.cloneNode(true);
+
+            clone.querySelectorAll("[data-theme-placeholder]").forEach((el) => {
+                el.removeAttribute("data-theme-placeholder");
+                el.setAttribute("data-theme", theme);
+            });
+
+            const button = clone.querySelector("button");
+            button.value = theme;
+
+            const label = clone.querySelector("[data-label]");
+            label.textContent = theme;
+            label.removeAttribute("data-label");
+
+            template.before(clone);
+        });
+
         this.#updateActiveThemeButtons();
     }
 
