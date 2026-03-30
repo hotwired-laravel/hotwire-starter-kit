@@ -29,6 +29,12 @@
     @apply hidden;
 }
 
+@layer base {
+    :root {
+        scrollbar-gutter: auto;
+    }
+}
+
 main {
-    scrollbar-gutter: stable both;
+    scrollbar-gutter: stable both !important;
 }
