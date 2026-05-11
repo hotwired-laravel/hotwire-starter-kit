@@ -36,7 +36,7 @@ test('can login with two factor code', function () {
         'code' => $validCode,
     ]);
 
-    $response->assertRedirect('/dashboard');
+    $response->assertRedirect(route('dashboard'));
     $this->assertAuthenticatedAs($user);
 });
 
@@ -75,7 +75,7 @@ test('can login with recovery codes', function () {
         'recovery_code' => $recoveryCode,
     ]);
 
-    $response->assertRedirect('/dashboard');
+    $response->assertRedirect(route('dashboard'));
     $this->assertAuthenticatedAs($user);
 
     $this->assertNotContains($recoveryCode, json_decode(decrypt($user->fresh()->two_factor_recovery_codes), true));

@@ -1,19 +1,22 @@
 <?php
 
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
 test('guests are redirected to the login page', function () {
-    $response = $this->get('/dashboard');
-    $response->assertRedirect('/login');
+    $team = Team::factory()->create();
+
+    $this->get(route('dashboard', ['current_team' => $team]))
+        ->assertRedirect(route('login'));
 });
 
 test('authenticated users can visit the dashboard', function () {
     $user = User::factory()->create();
-    $this->actingAs($user);
 
-    $response = $this->get('/dashboard');
-    $response->assertStatus(200);
+    $this->actingAs($user)
+        ->get(route('dashboard'))
+        ->assertOk();
 });
