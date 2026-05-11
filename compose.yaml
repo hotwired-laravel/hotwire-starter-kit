@@ -1,11 +1,11 @@
 services:
   laravel.test:
     build:
-      context: "./vendor/laravel/sail/runtimes/8.5"
+      context: ./vendor/laravel/sail/runtimes/8.5
       dockerfile: Dockerfile
       args:
         WWWGROUP: "${WWWGROUP}"
-    image: "sail-8.5/app"
+    image: sail-8.5/app
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:
@@ -18,6 +18,15 @@ services:
       IGNITION_LOCAL_SITES_PATH: "${PWD}"
     volumes:
       - ".:/var/www/html"
+    networks:
+      - sail
+    depends_on:
+      - mailpit
+  mailpit:
+    image: "axllent/mailpit:latest"
+    ports:
+      - "${FORWARD_MAILPIT_PORT:-1025}:1025"
+      - "${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025"
     networks:
       - sail
 networks:

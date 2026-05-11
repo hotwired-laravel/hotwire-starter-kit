@@ -1,28 +1,44 @@
 <?php
 
+use App\Http\Controllers\AcceptedInvitationsController;
 use App\Http\Controllers\HotwireNativeConfigurationController;
 use App\Http\Controllers\Settings\ConfirmedTwoFactorController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\RecoveryCodesController;
+use App\Http\Controllers\Settings\TeamInvitationsController;
+use App\Http\Controllers\Settings\TeamMembersController;
+use App\Http\Controllers\Settings\TeamsController;
+use App\Http\Controllers\Settings\TeamSwitchController;
 use App\Http\Controllers\Settings\TwoFactorController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Middleware\EnsureTeamMembership;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
-Route::view('/', 'welcome')->name('home');
+Route::view('/', 'welcome', [
+    'canRegister' => Features::enabled(Features::registration()),
+])->name('home');
 
 Route::middleware(['auth'])->group(function () {
-    Route::middleware('verified')->group(function () {
-        Route::view('dashboard', 'dashboard')->name('dashboard');
-    });
+    Route::prefix('{current_team}')
+        ->middleware(['auth', 'verified', EnsureTeamMembership::class])
+        ->group(function () {
+            Route::view('dashboard', 'dashboard')->name('dashboard');
+        });
+
+    Route::singleton('invitations.accept', AcceptedInvitationsController::class)->creatable()->only(['show', 'store']);
 
     Route::get('settings', [SettingsController::class, 'show'])->name('settings');
 
     Route::prefix('settings')->as('settings.')->group(function () {
-        Route::singleton('profile', ProfileController::class)->only(['edit', 'update']);
+        Route::resource('teams', TeamsController::class);
+        Route::singleton('teams.switch', TeamSwitchController::class)->only(['show']);
+        Route::resource('teams.members', TeamMembersController::class)->only(['index', 'update', 'destroy']);
+        Route::resource('teams.invitations', TeamInvitationsController::class)->only(['index', 'create', 'store', 'destroy']);
+
+        Route::singleton('profile', ProfileController::class)->destroyable()->only(['edit', 'update', 'destroy']);
         Route::get('profile/delete', [ProfileController::class, 'delete'])->name('profile.delete');
-        Route::post('profile/delete', [ProfileController::class, 'destroy'])->name('profile.destroy');
         Route::singleton('password', PasswordController::class)->only(['edit', 'update']);
 
         if (Features::canManageTwoFactorAuthentication()) {

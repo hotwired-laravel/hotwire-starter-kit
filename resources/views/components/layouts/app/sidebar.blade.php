@@ -20,6 +20,8 @@
                     <x-sidebar.collapse for="main-sidebar" class="group-has-[:checked]/sidebar:lg:hidden! group-has-[:checked]/sidebar:lg:group-hover/sidebar-header:inline-flex!" />
                 </div>
 
+                <x-teams.switcher class="mt-4 group-has-[:checked]/sidebar:lg:hidden!" />
+
                 <div class="space-y-2 mt-4">
                     <span class="text-base-content/50 text-xs px-1 group-has-[:checked]/sidebar:lg:hidden">{{ __('Platform') }}</span>
 
@@ -77,7 +79,11 @@
                         <x-slot name="iconSection">
                             <x-profile :initials="auth()->user()->initials()" class="p-0! hover:bg-transparent!" />
                         </x-slot>
-                        {{ auth()->user()->name }}
+
+                        <div class="grid flex-1 text-start text-sm leading-tight">
+                            <div class="truncate">{{ auth()->user()->name }}</div>
+                            <div class="text-xs opacity-50 truncate">{{ auth()->user()->currentTeam?->name }}</div>
+                        </div>
                     </x-sidebar.navlist-item>
                 </x-sidebar.navlist>
             </x-slot>

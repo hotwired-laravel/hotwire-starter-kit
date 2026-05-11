@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Support\Facades\Session;
+use Laravel\Fortify\Features;
 use Laravel\Fortify\Fortify;
 use PragmaRX\Google2FA\Google2FA;
 
@@ -15,7 +16,7 @@ test('user with two factor authentication enabled is redirected to challenge on 
 
     $response->assertRedirect('/two-factor-challenge');
     $this->assertEquals($user->id, Session::get('login.id'));
-});
+})->skip(fn () => ! Features::canManageTwoFactorAuthentication());
 
 test('can login with two factor code', function () {
     $user = User::factory()->withTwoFactorAuthenticationEnabled()->create();

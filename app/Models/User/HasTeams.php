@@ -1,0 +1,126 @@
+<?php
+
+namespace App\Models\User;
+
+use App\Enums\TeamRole;
+use App\Models\Membership;
+use App\Models\Team;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\URL;
+
+trait HasTeams
+{
+    /**
+     * Get all of the teams the user belongs to.
+     *
+     * @return BelongsToMany<Team, $this>
+     */
+    public function teams(): BelongsToMany
+    {
+        return $this->belongsToMany(Team::class, 'team_members', 'user_id', 'team_id')
+            ->withPivot(['role'])
+            ->withTimestamps()
+            ->using(Membership::class)
+            ->as('membership');
+    }
+
+    /**
+     * Get all of the memberships for the user.
+     *
+     * @return HasMany<Membership, $this>
+     */
+    public function memberships(): HasMany
+    {
+        return $this->hasMany(Membership::class, 'user_id');
+    }
+
+    /**
+     * Get the user's current team.
+     *
+     * @return BelongsTo<Team, $this>
+     */
+    public function currentTeam(): BelongsTo
+    {
+        return $this->belongsTo(Team::class, 'current_team_id');
+    }
+
+    /**
+     * Get the user's personal team.
+     */
+    public function personalTeam(): ?Team
+    {
+        return $this->teams()
+            ->where('is_personal', true)
+            ->first();
+    }
+
+    /**
+     * Switch to the given team.
+     */
+    public function switchTeam(Team $team): bool
+    {
+        if (! $this->belongsToTeam($team)) {
+            return false;
+        }
+
+        $this->update(['current_team_id' => $team->id]);
+        $this->setRelation('currentTeam', $team);
+
+        URL::defaults(['current_team' => $team->slug]);
+
+        return true;
+    }
+
+    /**
+     * Determine if the user belongs to the given team.
+     */
+    public function belongsToTeam(Team $team): bool
+    {
+        return $this->teams()->where('teams.id', $team->id)->exists();
+    }
+
+    /**
+     * Determine if the given team is the user's current team.
+     */
+    public function isCurrentTeam(Team $team): bool
+    {
+        return $this->current_team_id === $team->id;
+    }
+
+    /**
+     * Determine if the user is the owner of the given team.
+     */
+    public function ownsTeam(Team $team): bool
+    {
+        return $this->teamRole($team) === TeamRole::Owner;
+    }
+
+    /**
+     * Get the user's role on the given team.
+     */
+    public function teamRole(Team $team): ?TeamRole
+    {
+        return $this->memberships()
+            ->where('team_id', $team->id)
+            ->first()
+            ?->role;
+    }
+
+    public function fallbackTeam(?Team $excluding = null): ?Team
+    {
+        return $this->teams()
+            ->when($excluding, fn ($query) => $query->where('teams.id', '!=', $excluding->id))
+            ->orderByRaw('LOWER(teams.name)')
+            ->first();
+    }
+
+    /**
+     * Determine if the user has the given permission on the team.
+     */
+    public function hasTeamPermission(Team $team, string $permission): bool
+    {
+        return $this->teamRole($team)?->hasPermission($permission) ?? false;
+    }
+}

@@ -79,6 +79,10 @@
                             </div>
                         </x-navbar>
 
+                        <div class="mr-1.5 max-lg:hidden">
+                            <x-teams.switcher class="h-10" />
+                        </div>
+
                         <!-- Desktop User Menu -->
                         <a href="{{ route('settings') }}">
                             <x-profile

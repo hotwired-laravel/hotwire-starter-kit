@@ -1,7 +1,8 @@
-@props(['initials' => null, 'name' => null, 'avatar' => null])
+@props(['initials' => null, 'name' => null, 'avatar' => null, 'asLink' => true])
 
-<div
-    {{ $attributes->merge(['class' => 'group flex items-center rounded-lg has-data-[circle=true]:rounded-full p-1 hover:bg-base-300']) }}>
+<div {{
+    $attributes->merge(['class' => 'group flex items-center rounded-lg has-data-[circle=true]:rounded-full p-1' . ($asLink ? ' hover:bg-base-300' : '')])
+}} >
     <div class="shrink-0">
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             viewBox="0 0 512 512" class="size-8" aria-hidden="true">

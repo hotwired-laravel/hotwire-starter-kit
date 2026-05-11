@@ -5,6 +5,7 @@
         @endunlesshotwirenative
 
         <x-menu>
+            <x-menu.link icon="user-group" :href="route('settings.teams.index')">{{ __('My teams') }}</x-menu.link>
             <x-menu.link icon="user" :href="route('settings.profile.edit')">{{ __('Edit profile') }}</x-menu.link>
             <x-menu.link icon="key" :href="route('settings.password.edit')">{{ __('Change password') }}</x-menu.link>
             @if (\Laravel\Fortify\Features::canManageTwoFactorAuthentication())
