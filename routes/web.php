@@ -37,8 +37,9 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('teams.members', TeamMembersController::class)->only(['index', 'update', 'destroy']);
         Route::resource('teams.invitations', TeamInvitationsController::class)->only(['index', 'create', 'store', 'destroy']);
 
-        Route::singleton('profile', ProfileController::class)->destroyable()->only(['edit', 'update', 'destroy']);
+        Route::singleton('profile', ProfileController::class)->only(['edit', 'update']);
         Route::get('profile/delete', [ProfileController::class, 'delete'])->name('profile.delete');
+        Route::post('profile/delete', [ProfileController::class, 'destroy'])->name('profile.destroy');
         Route::singleton('password', PasswordController::class)->only(['edit', 'update']);
 
         if (Features::canManageTwoFactorAuthentication()) {
