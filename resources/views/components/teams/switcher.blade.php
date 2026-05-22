@@ -1,7 +1,7 @@
 @props(['id' => 'team-switcher'])
 
 <button {{ $attributes->merge([
-    'class' => 'btn btn-ghost w-full flex items-center justify-between gap-3 py-0 px-3 group',
+    'class' => 'btn btn-ghost w-full flex items-center justify-between gap-3 py-0 px-2.5 group',
     'popovertarget' => 'team-switcher',
     'style' => 'anchor-name:--anchor-' . $id,
 ]) }}>
