@@ -9,10 +9,17 @@ Hotwire is an alternative approach to building modern web applications without u
 This Hotwire Starter Kit comes with [Turbo Laravel](https://turbo-laravel.com/), [Tailwind CSS Laravel](https://github.com/tonysm/tailwindcss-laravel) and [Importmap Laravel](https://github.com/tonysm/importmap-laravel) for a #nobuild frontend setup (but it also works with Vite, if you want to use that), [Stimulus Laravel](https://github.com/hotwired-laravel/stimulus-laravel) to make it easier to make Stimulus controllers and Hotwire Native Bridge Components, it also comes with the [Hotwire Hotreload](https://github.com/hotwired-laravel/hotreload) package installed as a dev dependency to make development easier, and the [daisyUI](https://daisyui.com/) component library integrated.
 
 ## Installation
+
 You can use the Laravel Installer to setup the Hotwire Starter Kit.
 
 ```bash
 laravel new my-app --using=hotwired-laravel/hotwire-starter-kit
+```
+
+If you want teams support, make sure you use the `teams` branch:
+
+```bash
+laravel new my-app --using=hotwired-laravel/hotwire-starter-kit:dev-teams
 ```
 
 ### Local Development
@@ -47,4 +54,3 @@ Thank you for considering contributing to our starter kit! Please, feel free to 
 ## License
 
 The Laravel + Hotwire Starter Kit is open-sourced software licensed under the MIT license.
-
