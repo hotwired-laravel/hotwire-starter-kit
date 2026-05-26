@@ -206,6 +206,24 @@ test('team invitations cannot be cancelled by plain members', function () {
     $this->assertModelExists($invitation);
 });
 
+test('team invitations cannot be cancelled from a different team', function () {
+    $owner = User::factory()->create();
+    $teamA = Team::factory()->create();
+    $teamB = Team::factory()->create();
+    $teamA->members()->attach($owner, ['role' => TeamRole::Owner->value]);
+    $teamB->members()->attach($owner, ['role' => TeamRole::Owner->value]);
+
+    $invitation = TeamInvitation::factory()->for($teamB)->create([
+        'invited_by' => $owner->id,
+    ]);
+
+    $this->actingAs($owner)
+        ->delete(route('settings.teams.invitations.destroy', [$teamA, $invitation]))
+        ->assertNotFound();
+
+    $this->assertModelExists($invitation);
+});
+
 test('team invitations can be accepted', function () {
     $owner = User::factory()->create();
     $invitedUser = User::factory()->create(['email' => 'invited@example.com']);

@@ -117,3 +117,35 @@ test('team member cannot be removed by admin', function () {
 
     expect($member->fresh()->belongsToTeam($team))->toBeTrue();
 });
+
+test('team member cannot be updated from a different team', function () {
+    $owner = User::factory()->create();
+    $member = User::factory()->create();
+    $teamA = Team::factory()->create();
+    $teamB = Team::factory()->create();
+    $teamA->members()->attach($owner, ['role' => TeamRole::Owner->value]);
+    $teamB->members()->attach($owner, ['role' => TeamRole::Owner->value]);
+    $teamB->members()->attach($member, ['role' => TeamRole::Member->value]);
+
+    $this->actingAs($owner)
+        ->put(route('settings.teams.members.update', [$teamA, $member]), ['role' => 'admin'])
+        ->assertNotFound();
+
+    expect($member->fresh()->teamRole($teamB))->toBe(TeamRole::Member);
+});
+
+test('team member cannot be removed from a different team', function () {
+    $owner = User::factory()->create();
+    $member = User::factory()->create();
+    $teamA = Team::factory()->create();
+    $teamB = Team::factory()->create();
+    $teamA->members()->attach($owner, ['role' => TeamRole::Owner->value]);
+    $teamB->members()->attach($owner, ['role' => TeamRole::Owner->value]);
+    $teamB->members()->attach($member, ['role' => TeamRole::Member->value]);
+
+    $this->actingAs($owner)
+        ->delete(route('settings.teams.members.destroy', [$teamA, $member]))
+        ->assertNotFound();
+
+    expect($member->fresh()->belongsToTeam($teamB))->toBeTrue();
+});

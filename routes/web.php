@@ -36,8 +36,8 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('settings')->as('settings.')->group(function () {
         Route::resource('teams', TeamsController::class);
         Route::singleton('teams.switch', TeamSwitchController::class)->only(['update']);
-        Route::resource('teams.members', TeamMembersController::class)->only(['index', 'update', 'destroy']);
-        Route::resource('teams.invitations', TeamInvitationsController::class)->only(['index', 'create', 'store', 'destroy']);
+        Route::resource('teams.members', TeamMembersController::class)->only(['index', 'update', 'destroy'])->scoped();
+        Route::resource('teams.invitations', TeamInvitationsController::class)->only(['index', 'create', 'store', 'destroy'])->scoped();
 
         Route::singleton('profile', ProfileController::class)->only(['edit', 'update']);
         Route::get('profile/delete', [ProfileController::class, 'delete'])->name('profile.delete');
