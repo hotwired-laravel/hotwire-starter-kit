@@ -134,6 +134,58 @@ test('team member cannot be updated from a different team', function () {
     expect($member->fresh()->teamRole($teamB))->toBe(TeamRole::Member);
 });
 
+test('team owner cannot demote themselves', function () {
+    $owner = User::factory()->create();
+    $team = Team::factory()->create();
+    $team->members()->attach($owner, ['role' => TeamRole::Owner->value]);
+
+    $this->actingAs($owner)
+        ->put(route('settings.teams.members.update', [$team, $owner]), ['role' => 'member'])
+        ->assertForbidden();
+
+    expect($owner->fresh()->teamRole($team))->toBe(TeamRole::Owner);
+});
+
+test('team owner cannot demote another owner', function () {
+    $ownerA = User::factory()->create();
+    $ownerB = User::factory()->create();
+    $team = Team::factory()->create();
+    $team->members()->attach($ownerA, ['role' => TeamRole::Owner->value]);
+    $team->members()->attach($ownerB, ['role' => TeamRole::Owner->value]);
+
+    $this->actingAs($ownerA)
+        ->put(route('settings.teams.members.update', [$team, $ownerB]), ['role' => 'admin'])
+        ->assertForbidden();
+
+    expect($ownerB->fresh()->teamRole($team))->toBe(TeamRole::Owner);
+});
+
+test('team owner cannot remove themselves', function () {
+    $owner = User::factory()->create();
+    $team = Team::factory()->create();
+    $team->members()->attach($owner, ['role' => TeamRole::Owner->value]);
+
+    $this->actingAs($owner)
+        ->delete(route('settings.teams.members.destroy', [$team, $owner]))
+        ->assertForbidden();
+
+    expect($owner->fresh()->belongsToTeam($team))->toBeTrue();
+});
+
+test('team owner cannot remove another owner', function () {
+    $ownerA = User::factory()->create();
+    $ownerB = User::factory()->create();
+    $team = Team::factory()->create();
+    $team->members()->attach($ownerA, ['role' => TeamRole::Owner->value]);
+    $team->members()->attach($ownerB, ['role' => TeamRole::Owner->value]);
+
+    $this->actingAs($ownerA)
+        ->delete(route('settings.teams.members.destroy', [$team, $ownerB]))
+        ->assertForbidden();
+
+    expect($ownerB->fresh()->belongsToTeam($team))->toBeTrue();
+});
+
 test('team member cannot be removed from a different team', function () {
     $owner = User::factory()->create();
     $member = User::factory()->create();

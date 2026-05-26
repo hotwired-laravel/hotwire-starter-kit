@@ -32,22 +32,29 @@ class TeamMembersController extends Controller
             'role' => ['required', 'string', Rule::enum(TeamRole::class)->except(TeamRole::Owner)],
         ]);
 
-        $team->memberships()
+        $membership = $team->memberships()
             ->where('user_id', $member->getKey())
-            ->firstOrFail()
-            ->update(['role' => TeamRole::from($validated['role'])]);
+            ->firstOrFail();
+
+        abort_if($membership->role === TeamRole::Owner, 403);
+
+        $membership->update(['role' => TeamRole::from($validated['role'])]);
 
         return back()->with('notice', __('Member role updated.'));
     }
 
-    public function destroy(Team $team, User $member)
+    public function destroy(Request $request, Team $team, User $member)
     {
         $this->authorize('removeMember', $team);
 
-        $team->memberships()
+        $membership = $team->memberships()
             ->where('user_id', $member->getKey())
-            ->firstOrFail()
-            ->delete();
+            ->firstOrFail();
+
+        abort_if($membership->role === TeamRole::Owner, 403);
+        abort_if($member->is($request->user()), 403);
+
+        $membership->delete();
 
         return back()->with('notice', __('Member removed.'));
     }
