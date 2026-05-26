@@ -34,7 +34,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings', [SettingsController::class, 'show'])->name('settings');
 
     Route::prefix('settings')->as('settings.')->group(function () {
-        Route::resource('teams', TeamsController::class);
+        Route::get('teams/{team}/delete', [TeamsController::class, 'delete'])->name('teams.delete');
+        Route::post('teams/{team}/delete', [TeamsController::class, 'destroy'])->name('teams.destroy');
+        Route::resource('teams', TeamsController::class)->except(['destroy']);
         Route::singleton('teams.switch', TeamSwitchController::class)->only(['update']);
         Route::resource('teams.members', TeamMembersController::class)->only(['index', 'update', 'destroy'])->scoped();
         Route::resource('teams.invitations', TeamInvitationsController::class)->only(['index', 'create', 'store', 'destroy'])->scoped();

@@ -12,6 +12,12 @@
             @endcan
             <x-menu.link icon="users" :href="route('settings.teams.members.index', $team)">{{ __('Members') }}</x-menu.link>
         </x-menu>
+
+        @can('delete', $team)
+        <x-menu>
+            <x-menu.link icon="trash" :href="route('settings.teams.delete', $team)">{{ __('Delete team') }}</x-menu.link>
+        </x-menu>
+        @endcan
     </section>
 
     <form action="{{ route('settings.teams.switch.update', $team) }}" method="post" id="switch-to-team-{{ $team->id }}">

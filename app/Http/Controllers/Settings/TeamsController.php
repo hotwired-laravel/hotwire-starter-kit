@@ -9,6 +9,7 @@ use App\Rules\TeamName;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class TeamsController extends Controller
 {
@@ -68,5 +69,41 @@ class TeamsController extends Controller
         });
 
         return to_route('settings.teams.show', $team)->with('notice', __('Team name updated.'));
+    }
+
+    public function delete(Request $request, Team $team)
+    {
+        $this->authorize('delete', $team);
+
+        return view('settings.teams.delete', [
+            'team' => $team,
+        ]);
+    }
+
+    public function destroy(Request $request, Team $team)
+    {
+        $this->authorize('delete', $team);
+
+        $request->validate([
+            'confirmation' => ['required', 'string', Rule::in(['delete'])],
+        ], [
+            'confirmation.in' => __('Type "delete" to confirm.'),
+        ]);
+
+        $user = $request->user();
+
+        DB::transaction(function () use ($user, $team) {
+            if ($user->isCurrentTeam($team)) {
+                $fallback = $user->fallbackTeam(excluding: $team);
+
+                if ($fallback) {
+                    $user->switchTeam($fallback);
+                }
+            }
+
+            $team->delete();
+        });
+
+        return to_route('settings.teams.index')->with('notice', __('Team deleted.'));
     }
 }
