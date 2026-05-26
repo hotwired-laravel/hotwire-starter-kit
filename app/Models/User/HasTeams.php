@@ -65,7 +65,7 @@ trait HasTeams
             return false;
         }
 
-        $this->update(['current_team_id' => $team->id]);
+        $this->forceFill(['current_team_id' => $team->id])->save();
         $this->setRelation('currentTeam', $team);
 
         URL::defaults(['current_team' => $team->slug]);
