@@ -6,7 +6,7 @@
     'style' => 'anchor-name:--anchor-' . $id,
 ]) }}>
     <x-dynamic-component component="heroicon-o-user-group" class="size-6" aria-hidden="true" />
-    <span class="flex-1 text-left truncate">{{ auth()->user()->currentTeam?->name }}</span>
+    <span class="flex-1 text-left truncate">{{ active_team()?->name }}</span>
     <x-dynamic-component component="heroicon-o-chevron-up-down" class="size-4 opacity-50 transition group-hover:opacity-100" aria-hidden="true" />
 </button>
 

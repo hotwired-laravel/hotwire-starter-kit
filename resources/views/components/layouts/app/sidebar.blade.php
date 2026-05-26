@@ -82,7 +82,7 @@
 
                         <div class="grid flex-1 text-start text-sm leading-tight">
                             <div class="truncate">{{ auth()->user()->name }}</div>
-                            <div class="text-xs opacity-50 truncate">{{ auth()->user()->currentTeam?->name }}</div>
+                            <div class="text-xs opacity-50 truncate">{{ active_team()?->name }}</div>
                         </div>
                     </x-sidebar.navlist-item>
                 </x-sidebar.navlist>
