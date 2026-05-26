@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\URL;
 
 class TeamInvitation extends Notification implements ShouldQueue
 {
@@ -41,7 +42,11 @@ class TeamInvitation extends Notification implements ShouldQueue
         return (new MailMessage)
             ->subject("You've been invited to join {$team->name}")
             ->line("{$inviter->name} has invited you to join the {$team->name} team.")
-            ->action('Accept invitation', url("/invitations/{$this->invitation->code}/accept"));
+            ->action('Accept invitation', URL::temporarySignedRoute(
+                'invitations.accept.show',
+                $this->invitation->expires_at,
+                ['invitation' => $this->invitation],
+            ));
     }
 
     /**

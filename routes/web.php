@@ -27,7 +27,9 @@ Route::middleware(['auth'])->group(function () {
             Route::view('dashboard', 'dashboard')->name('dashboard');
         });
 
-    Route::singleton('invitations.accept', AcceptedInvitationsController::class)->creatable()->only(['show', 'store']);
+    Route::get('invitations/{invitation}/accept', [AcceptedInvitationsController::class, 'show'])
+        ->middleware('signed')
+        ->name('invitations.accept.show');
 
     Route::get('settings', [SettingsController::class, 'show'])->name('settings');
 

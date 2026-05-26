@@ -8,6 +8,7 @@ use App\Notifications\Teams\TeamInvitation as TeamInvitationNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\URL;
 
 uses(RefreshDatabase::class);
 
@@ -218,8 +219,14 @@ test('team invitations can be accepted', function () {
         'expires_at' => now()->addDay(),
     ]);
 
+    $url = URL::temporarySignedRoute(
+        'invitations.accept.show',
+        $invitation->expires_at,
+        ['invitation' => $invitation],
+    );
+
     $this->actingAs($invitedUser)
-        ->get(route('invitations.accept.show', $invitation))
+        ->get($url)
         ->assertRedirect(route('dashboard'))
         ->assertSessionHas('notice', fn ($notice) => str_contains($notice, $team->name));
 
@@ -241,8 +248,14 @@ test('team invitations cannot be accepted by user that wasnt invited', function 
         'expires_at' => now()->addDay(),
     ]);
 
+    $url = URL::temporarySignedRoute(
+        'invitations.accept.show',
+        $invitation->expires_at,
+        ['invitation' => $invitation],
+    );
+
     $this->actingAs($uninvitedUser)
-        ->get(route('invitations.accept.show', $invitation))
+        ->get($url)
         ->assertInvalid(['invitation']);
 
     expect($invitation->fresh()->accepted_at)->toBeNull();
@@ -260,10 +273,17 @@ test('expired invitations cannot be accepted', function () {
         'invited_by' => $owner->id,
     ]);
 
-    $this->actingAs($invitedUser)
-        ->get(route('invitations.accept.show', $invitation))
-        ->assertInvalid(['invitation']);
+    $url = URL::temporarySignedRoute(
+        'invitations.accept.show',
+        $invitation->expires_at,
+        ['invitation' => $invitation],
+    );
 
+    $this->actingAs($invitedUser)
+        ->get($url)
+        ->assertForbidden();
+
+    expect($invitation->fresh()->accepted_at)->toBeNull();
     expect($invitedUser->fresh()->belongsToTeam($team))->toBeFalse();
 });
 
@@ -281,8 +301,14 @@ test('already accepted invitations cannot be accepted again', function () {
 
     $previousAcceptedAt = $invitation->accepted_at;
 
+    $url = URL::temporarySignedRoute(
+        'invitations.accept.show',
+        $invitation->expires_at,
+        ['invitation' => $invitation],
+    );
+
     $this->actingAs($invitedUser)
-        ->get(route('invitations.accept.show', $invitation))
+        ->get($url)
         ->assertInvalid(['invitation']);
 
     expect($invitation->fresh()->accepted_at->equalTo($previousAcceptedAt))->toBeTrue();
@@ -294,4 +320,71 @@ test('guests cannot accept invitations', function () {
 
     $this->get(route('invitations.accept.show', $invitation))
         ->assertRedirect(route('login'));
+});
+
+test('unsigned accept URLs are rejected', function () {
+    $owner = User::factory()->create();
+    $invitedUser = User::factory()->create(['email' => 'invited@example.com']);
+    $team = Team::factory()->create();
+    $team->members()->attach($owner, ['role' => TeamRole::Owner->value]);
+
+    $invitation = TeamInvitation::factory()->for($team)->create([
+        'email' => 'invited@example.com',
+        'invited_by' => $owner->id,
+        'expires_at' => now()->addDay(),
+    ]);
+
+    $this->actingAs($invitedUser)
+        ->get(route('invitations.accept.show', $invitation))
+        ->assertForbidden();
+
+    expect($invitation->fresh()->accepted_at)->toBeNull();
+    expect($invitedUser->fresh()->belongsToTeam($team))->toBeFalse();
+});
+
+test('tampered signed accept URLs are rejected', function () {
+    $owner = User::factory()->create();
+    $invitedUser = User::factory()->create(['email' => 'invited@example.com']);
+    $team = Team::factory()->create();
+    $team->members()->attach($owner, ['role' => TeamRole::Owner->value]);
+
+    $invitation = TeamInvitation::factory()->for($team)->create([
+        'email' => 'invited@example.com',
+        'invited_by' => $owner->id,
+        'expires_at' => now()->addDay(),
+    ]);
+
+    $validUrl = URL::temporarySignedRoute(
+        'invitations.accept.show',
+        $invitation->expires_at,
+        ['invitation' => $invitation],
+    );
+
+    $tamperedUrl = substr($validUrl, 0, -4).'dead';
+
+    $this->actingAs($invitedUser)
+        ->get($tamperedUrl)
+        ->assertForbidden();
+
+    expect($invitation->fresh()->accepted_at)->toBeNull();
+    expect($invitedUser->fresh()->belongsToTeam($team))->toBeFalse();
+});
+
+test('invitation notification builds a signed URL', function () {
+    $owner = User::factory()->create();
+    $team = Team::factory()->create();
+    $team->members()->attach($owner, ['role' => TeamRole::Owner->value]);
+
+    $invitation = TeamInvitation::factory()->for($team)->create([
+        'email' => 'invited@example.com',
+        'invited_by' => $owner->id,
+        'expires_at' => now()->addDay(),
+    ]);
+
+    $mail = (new TeamInvitationNotification($invitation))->toMail(new AnonymousNotifiable);
+
+    expect($mail->actionUrl)
+        ->toContain('/invitations/'.$invitation->code.'/accept')
+        ->toContain('expires=')
+        ->toContain('signature=');
 });
