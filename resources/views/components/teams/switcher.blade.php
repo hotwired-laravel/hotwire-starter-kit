@@ -19,11 +19,11 @@
     <li class="menu-title text-xs">{{ __('All teams') }}</li>
     @foreach (auth()->user()->teams as $team)
         <li class="w-full">
-            <a href="{{ route('settings.teams.switch.show', $team) }}" class="w-full flex items-center justify-between">
+            <button type="submit" form="switch-team-{{ $team->id }}" class="w-full flex items-center justify-between">
                 <x-dynamic-component component="heroicon-o-user-group" class="size-5" aria-hidden="true" />
                 <span class="flex-1 truncate">{{ $team->name }}</span>
                 <x-dynamic-component component="heroicon-o-chevron-right" class="size-4" aria-hidden="true" />
-            </a>
+            </button>
         </li>
     @endforeach
     <li></li>
@@ -34,3 +34,10 @@
         </a>
     </li>
 </ul>
+
+@foreach (auth()->user()->teams as $team)
+    <form action="{{ route('settings.teams.switch.update', $team) }}" method="post" id="switch-team-{{ $team->id }}">
+        @csrf
+        @method('PUT')
+    </form>
+@endforeach

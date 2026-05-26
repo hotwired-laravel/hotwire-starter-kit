@@ -13,7 +13,7 @@ test('can switch to a team the user belongs to', function () {
     $team->members()->attach($user, ['role' => TeamRole::Member->value]);
 
     $this->actingAs($user)
-        ->get(route('settings.teams.switch.show', $team))
+        ->put(route('settings.teams.switch.update', $team))
         ->assertRedirect(route('dashboard', ['current_team' => $team->slug]));
 
     expect($user->fresh()->current_team_id)->toBe($team->id);
@@ -26,7 +26,7 @@ test('switch redirects to dashboard when to_dashboard=true even with a referer',
 
     $this->actingAs($user)
         ->withHeaders(['Referer' => 'http://localhost/some/page'])
-        ->get(route('settings.teams.switch.show', $team).'?to_dashboard=1')
+        ->put(route('settings.teams.switch.update', $team), ['to_dashboard' => 1])
         ->assertRedirect(route('dashboard', ['current_team' => $team->slug]));
 });
 
@@ -40,7 +40,7 @@ test('switch rewrites the team slug in the referer URL', function () {
 
     $this->actingAs($user)
         ->withHeaders(['Referer' => $referer])
-        ->get(route('settings.teams.switch.show', $newTeam))
+        ->put(route('settings.teams.switch.update', $newTeam))
         ->assertRedirect("http://localhost/{$newTeam->slug}/dashboard");
 });
 
@@ -49,7 +49,7 @@ test('cannot switch to a team the user does not belong to', function () {
     $foreign = Team::factory()->create();
 
     $this->actingAs($user)
-        ->get(route('settings.teams.switch.show', $foreign))
+        ->put(route('settings.teams.switch.update', $foreign))
         ->assertForbidden();
 
     expect($user->fresh()->current_team_id)->not->toBe($foreign->id);

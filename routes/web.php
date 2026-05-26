@@ -35,7 +35,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('settings')->as('settings.')->group(function () {
         Route::resource('teams', TeamsController::class);
-        Route::singleton('teams.switch', TeamSwitchController::class)->only(['show']);
+        Route::singleton('teams.switch', TeamSwitchController::class)->only(['update']);
         Route::resource('teams.members', TeamMembersController::class)->only(['index', 'update', 'destroy']);
         Route::resource('teams.invitations', TeamInvitationsController::class)->only(['index', 'create', 'store', 'destroy']);
 

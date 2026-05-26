@@ -11,7 +11,7 @@ class TeamSwitchController extends Controller
 {
     use AuthorizesRequests;
 
-    public function show(Request $request, Team $team)
+    public function update(Request $request, Team $team)
     {
         $this->authorize('view', $team);
 
