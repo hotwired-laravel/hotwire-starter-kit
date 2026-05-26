@@ -72,7 +72,40 @@ test('team creation rejects reserved names', function (string $name) {
     'settings' => ['settings'],
     'login' => ['login'],
     'http status code' => ['404'],
+    'uppercase' => ['SETTINGS'],
+    'leading/trailing whitespace' => ['  settings  '],
+    'diacritic settings' => ['settïngs'],
+    'diacritic admin' => ['admín'],
+    'capitalized diacritic' => ['Settïngs'],
+    'zero-width space' => ["settings\u{200B}"],
 ]);
+
+test('team creation rejects names that slugify to empty', function (string $name) {
+    $user = User::factory()->create();
+
+    $this->actingAs($user)
+        ->post(route('settings.teams.store'), ['team_name' => $name])
+        ->assertInvalid(['team_name']);
+})->with([
+    'punctuation' => ['!!'],
+    'dots' => ['...'],
+    'emoji' => ['🎉🎉'],
+]);
+
+test('team update rejects reserved names via unicode', function () {
+    $user = User::factory()->create();
+    $team = Team::factory()->create(['name' => 'Original Name', 'slug' => 'original-name']);
+    $team->members()->attach($user, ['role' => TeamRole::Owner->value]);
+
+    $this->actingAs($user)
+        ->put(route('settings.teams.update', $team), ['team_name' => 'settïngs'])
+        ->assertInvalid(['team_name']);
+
+    $team->refresh();
+
+    expect($team->name)->toBe('Original Name');
+    expect($team->slug)->toBe('original-name');
+});
 
 test('team edit page can be rendered by owner', function () {
     $user = User::factory()->create();

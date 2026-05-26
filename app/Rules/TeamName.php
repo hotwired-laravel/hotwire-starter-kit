@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Routing\Route as RouteElement;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use Illuminate\Translation\PotentiallyTranslatedString;
 
 class TeamName implements ValidationRule
@@ -17,9 +18,15 @@ class TeamName implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $name = strtolower(trim($value));
+        $slug = Str::slug((string) $value);
 
-        if (in_array($name, $this->reservedNames(), true)) {
+        if ($slug === '') {
+            $fail('The team name must contain at least one letter or number.');
+
+            return;
+        }
+
+        if (in_array($slug, $this->reservedNames(), true)) {
             $fail('This team name is reserved and cannot be used.');
         }
     }
