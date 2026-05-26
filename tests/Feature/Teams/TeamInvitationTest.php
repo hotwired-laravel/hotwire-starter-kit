@@ -93,6 +93,30 @@ test('team invitations can be created', function () {
     );
 });
 
+test('team invitations are rate limited per user', function () {
+    Notification::fake();
+
+    $owner = User::factory()->create();
+    $team = Team::factory()->create();
+    $team->members()->attach($owner, ['role' => TeamRole::Owner->value]);
+
+    foreach (range(1, 10) as $i) {
+        $this->actingAs($owner)
+            ->post(route('settings.teams.invitations.store', $team), [
+                'email' => "invite{$i}@example.com",
+                'role' => 'member',
+            ])
+            ->assertRedirect();
+    }
+
+    $this->actingAs($owner)
+        ->post(route('settings.teams.invitations.store', $team), [
+            'email' => 'invite11@example.com',
+            'role' => 'member',
+        ])
+        ->assertStatus(429);
+});
+
 test('team invitations cannot be created by members', function () {
     $owner = User::factory()->create();
     $member = User::factory()->create();

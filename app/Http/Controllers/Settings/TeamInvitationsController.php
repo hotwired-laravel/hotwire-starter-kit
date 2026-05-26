@@ -10,12 +10,19 @@ use App\Notifications\Teams\TeamInvitation as TeamInvitationNotification;
 use App\Rules\UniqueTeamInvitation;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rule;
 
-class TeamInvitationsController extends Controller
+class TeamInvitationsController extends Controller implements HasMiddleware
 {
     use AuthorizesRequests;
+
+    public static function middleware(): array
+    {
+        return [new Middleware('throttle:invitations', only: ['store'])];
+    }
 
     public function index(Team $team)
     {
