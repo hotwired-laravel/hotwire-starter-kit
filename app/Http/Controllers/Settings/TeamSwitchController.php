@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Settings;
 use App\Http\Controllers\Controller;
 use App\Models\Team;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class TeamSwitchController extends Controller
 {
     use AuthorizesRequests;
 
-    public function update(Request $request, Team $team)
+    public function update(Request $request, Team $team): RedirectResponse
     {
         $this->authorize('view', $team);
 
@@ -19,17 +20,19 @@ class TeamSwitchController extends Controller
 
         $request->user()->switchTeam($team);
 
-        if (! $request->header('Referer') || $request->boolean('to_dashboard')) {
+        $referer = $request->header('Referer');
+
+        if (! is_string($referer) || $referer === '' || $request->boolean('to_dashboard')) {
             return to_route('dashboard', ['current_team' => $team->slug]);
         }
 
         if (! $currentTeamSlug) {
-            return redirect($request->header('Referer'));
+            return redirect($referer);
         }
 
-        $redirectTo = $this->replaceCurrentTeamInReferer($request->header('Referer'), $currentTeamSlug, $team->slug);
+        $redirectTo = $this->replaceCurrentTeamInReferer($referer, $currentTeamSlug, $team->slug);
 
-        return redirect($redirectTo ?? request()->header('Referer'));
+        return redirect($redirectTo ?? $referer);
     }
 
     private function replaceCurrentTeamInReferer(string $referer, string $currentTeamSlug, string $newTeamSlug): ?string

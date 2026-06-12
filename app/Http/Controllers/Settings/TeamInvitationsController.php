@@ -8,7 +8,9 @@ use App\Models\Team;
 use App\Models\TeamInvitation;
 use App\Notifications\Teams\TeamInvitation as TeamInvitationNotification;
 use App\Rules\UniqueTeamInvitation;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -24,7 +26,7 @@ class TeamInvitationsController extends Controller implements HasMiddleware
         return [new Middleware('throttle:invitations', only: ['store'])];
     }
 
-    public function index(Team $team)
+    public function index(Team $team): View
     {
         $this->authorize('view', $team);
 
@@ -34,7 +36,7 @@ class TeamInvitationsController extends Controller implements HasMiddleware
         ]);
     }
 
-    public function create(Team $team)
+    public function create(Team $team): View
     {
         $this->authorize('addInvitation', $team);
 
@@ -43,7 +45,7 @@ class TeamInvitationsController extends Controller implements HasMiddleware
         ]);
     }
 
-    public function store(Request $request, Team $team)
+    public function store(Request $request, Team $team): RedirectResponse
     {
         $this->authorize('addInvitation', $team);
 
@@ -64,7 +66,7 @@ class TeamInvitationsController extends Controller implements HasMiddleware
         return to_route('settings.teams.invitations.index', $team)->with('notice', 'Invitation sent.');
     }
 
-    public function destroy(Team $team, TeamInvitation $invitation)
+    public function destroy(Team $team, TeamInvitation $invitation): RedirectResponse
     {
         $this->authorize('cancelInvitation', $team);
 

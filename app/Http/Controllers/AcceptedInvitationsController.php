@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\TeamInvitation;
+use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -13,7 +15,7 @@ class AcceptedInvitationsController extends Controller
 {
     use AuthorizesRequests;
 
-    public function show(Request $request, TeamInvitation $invitation)
+    public function show(Request $request, TeamInvitation $invitation): RedirectResponse
     {
         $this->guardAgainstInvalidInvitations($user = $request->user(), $invitation);
 
@@ -33,7 +35,7 @@ class AcceptedInvitationsController extends Controller
         return to_route('dashboard')->with('notice', __('Joined :team', ['team' => $invitation->team->name]));
     }
 
-    private function guardAgainstInvalidInvitations($user, TeamInvitation $invitation): void
+    private function guardAgainstInvalidInvitations(User $user, TeamInvitation $invitation): void
     {
         if ($invitation->isAccepted()) {
             throw ValidationException::withMessages([

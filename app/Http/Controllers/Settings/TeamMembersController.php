@@ -6,7 +6,9 @@ use App\Enums\TeamRole;
 use App\Http\Controllers\Controller;
 use App\Models\Team;
 use App\Models\User;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -14,7 +16,7 @@ class TeamMembersController extends Controller
 {
     use AuthorizesRequests;
 
-    public function index(Team $team)
+    public function index(Team $team): View
     {
         $this->authorize('view', $team);
 
@@ -24,7 +26,7 @@ class TeamMembersController extends Controller
         ]);
     }
 
-    public function update(Request $request, Team $team, User $member)
+    public function update(Request $request, Team $team, User $member): RedirectResponse
     {
         $this->authorize('updateMember', $team);
 
@@ -43,7 +45,7 @@ class TeamMembersController extends Controller
         return back()->with('notice', __('Member role updated.'));
     }
 
-    public function destroy(Request $request, Team $team, User $member)
+    public function destroy(Request $request, Team $team, User $member): RedirectResponse
     {
         $this->authorize('removeMember', $team);
 

@@ -6,7 +6,9 @@ use App\Actions\Teams\CreateTeam;
 use App\Http\Controllers\Controller;
 use App\Models\Team;
 use App\Rules\TeamName;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -15,19 +17,19 @@ class TeamsController extends Controller
 {
     use AuthorizesRequests;
 
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         return view('settings.teams.index', [
             'teams' => $request->user()->teams,
         ]);
     }
 
-    public function create()
+    public function create(): View
     {
         return view('settings.teams.create');
     }
 
-    public function store(Request $request, CreateTeam $createTeam)
+    public function store(Request $request, CreateTeam $createTeam): RedirectResponse
     {
         $validated = $request->validate([
             'team_name' => ['required', 'string', 'max:255', new TeamName],
@@ -38,7 +40,7 @@ class TeamsController extends Controller
         return redirect()->route('settings.teams.show', $team)->with('notice', __('Team created.'));
     }
 
-    public function show(Request $request, Team $team)
+    public function show(Request $request, Team $team): View
     {
         $this->authorize('view', $team);
 
@@ -47,7 +49,7 @@ class TeamsController extends Controller
         ]);
     }
 
-    public function edit(Request $request, Team $team)
+    public function edit(Request $request, Team $team): View
     {
         $this->authorize('update', $team);
 
@@ -56,22 +58,29 @@ class TeamsController extends Controller
         ]);
     }
 
-    public function update(Request $request, Team $team)
+    public function update(Request $request, Team $team): RedirectResponse
     {
         $this->authorize('update', $team);
 
         $validated = $request->validate(['team_name' => ['required', 'string', 'max:255', new TeamName]]);
 
-        $team = DB::transaction(function () use ($team, $validated) {
-            return tap(Team::lockForUpdate()->findOrFail($team->getKey()))->update([
+        $team = DB::transaction(function () use ($team, $validated): Team {
+            $team = Team::query()
+                ->whereKey($team->getKey())
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            $team->update([
                 'name' => $validated['team_name'],
             ]);
+
+            return $team;
         });
 
         return to_route('settings.teams.show', $team)->with('notice', __('Team name updated.'));
     }
 
-    public function delete(Request $request, Team $team)
+    public function delete(Request $request, Team $team): View
     {
         $this->authorize('delete', $team);
 
@@ -80,7 +89,7 @@ class TeamsController extends Controller
         ]);
     }
 
-    public function destroy(Request $request, Team $team)
+    public function destroy(Request $request, Team $team): RedirectResponse
     {
         $this->authorize('delete', $team);
 

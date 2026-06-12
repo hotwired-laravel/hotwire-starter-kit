@@ -15,7 +15,7 @@ trait HasTeams
     /**
      * Get all of the teams the user belongs to.
      *
-     * @return BelongsToMany<Team, $this>
+     * @return BelongsToMany<Team, $this, Membership, 'membership'>
      */
     public function teams(): BelongsToMany
     {
