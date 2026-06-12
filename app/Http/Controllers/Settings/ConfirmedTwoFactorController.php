@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Actions\ConfirmTwoFactorAuthentication;
 
 class ConfirmedTwoFactorController extends Controller
 {
-    public function edit(Request $request)
+    public function edit(Request $request): View
     {
         return view('settings.confirmed-two-factor.edit', [
             'user' => $user = $request->user(),
@@ -18,7 +20,7 @@ class ConfirmedTwoFactorController extends Controller
         ]);
     }
 
-    public function update(Request $request, ConfirmTwoFactorAuthentication $confirmTwoFactor)
+    public function update(Request $request, ConfirmTwoFactorAuthentication $confirmTwoFactor): RedirectResponse
     {
         $input = $request->validate([
             'code' => ['required', 'min:6'],

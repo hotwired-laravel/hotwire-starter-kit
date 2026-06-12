@@ -28,12 +28,14 @@ jobs:
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
-      - name: Run Pint
-        run: ./vendor/bin/pint
+      - name: Run Linting
+        run: composer lint
 
       # - name: Commit Changes
-      #   uses: stefanzweifel/git-auto-commit-action@v5
+      #   uses: stefanzweifel/git-auto-commit-action@v7
       #   with:
       #     commit_message: fix code style
       #     commit_options: '--no-verify'
-      #     file_pattern: '!.github/workflows/* **/*'
+      #     file_pattern: |
+      #       **/*
+      #       !.github/workflows/*

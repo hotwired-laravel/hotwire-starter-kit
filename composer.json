@@ -23,6 +23,7 @@
     "require-dev": {
         "fakerphp/faker": "^1.24",
         "hotwired-laravel/hotreload": "^0.0.10",
+        "larastan/larastan": "^3.10",
         "laravel/pail": "^1.2.5",
         "laravel/pint": "^1.27",
         "laravel/sail": "^1.53",
@@ -65,12 +66,30 @@
             "@php artisan storage:link",
             "@php artisan migrate --graceful --ansi"
         ],
+        "pre-package-uninstall": [
+            "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+        ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
             "overmind start"
         ],
+        "lint": [
+            "pint --parallel"
+        ],
+        "lint:check": [
+            "pint --parallel --test"
+        ],
+        "ci:check": [
+            "Composer\\Config::disableProcessTimeout",
+            "@test"
+        ],
+        "types:check": [
+            "phpstan analyse --memory-limit=1G"
+        ],
         "test": [
             "@php artisan config:clear --ansi",
+            "@lint:check",
+            "@types:check",
             "@php artisan test"
         ]
     },
