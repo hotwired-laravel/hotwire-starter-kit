@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Laravel\Fortify\Actions\GenerateNewRecoveryCodes;
 
@@ -11,7 +13,7 @@ class RecoveryCodesController extends Controller
     /**
      * Show the form for managing recovery codes.
      */
-    public function edit(Request $request)
+    public function edit(Request $request): View
     {
         return view('settings.recovery-codes.edit', [
             'user' => $user = $request->user(),
@@ -22,7 +24,7 @@ class RecoveryCodesController extends Controller
     /**
      * Generate new recovery codes for the user.
      */
-    public function update(Request $request, GenerateNewRecoveryCodes $generateRecoveryCodes)
+    public function update(Request $request, GenerateNewRecoveryCodes $generateRecoveryCodes): RedirectResponse
     {
         $generateRecoveryCodes($request->user());
 

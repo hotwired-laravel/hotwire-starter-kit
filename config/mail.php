@@ -1,5 +1,8 @@
 <?php
 
+$appUrl = env('APP_URL', 'http://localhost');
+$appUrl = is_string($appUrl) ? $appUrl : 'http://localhost';
+
 return [
 
     /*
@@ -46,7 +49,7 @@ return [
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url(env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
+            'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url($appUrl, PHP_URL_HOST)),
         ],
 
         'ses' => [

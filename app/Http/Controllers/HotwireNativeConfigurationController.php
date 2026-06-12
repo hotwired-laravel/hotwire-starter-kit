@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
+
 class HotwireNativeConfigurationController extends Controller
 {
-    public function index()
+    public function index(): JsonResponse
     {
         return response()->json([
             'patterns' => [

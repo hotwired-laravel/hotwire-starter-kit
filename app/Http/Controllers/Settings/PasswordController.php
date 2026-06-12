@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
 
@@ -11,7 +13,7 @@ class PasswordController extends Controller
     /**
      * Shows the update password form.
      */
-    public function edit()
+    public function edit(): View
     {
         return view('settings.password.edit');
     }
@@ -19,7 +21,7 @@ class PasswordController extends Controller
     /**
      * Handles the update password form submit.
      */
-    public function update(Request $request)
+    public function update(Request $request): RedirectResponse
     {
         $request->validate([
             'current_password' => ['required', 'string', 'current_password'],

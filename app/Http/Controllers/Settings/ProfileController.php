@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -14,7 +16,7 @@ class ProfileController extends Controller
     /**
      * Shows the update profile info form.
      */
-    public function edit(Request $request)
+    public function edit(Request $request): View
     {
         return view('settings.profile.edit', [
             'name' => $request->user()->name,
@@ -25,7 +27,7 @@ class ProfileController extends Controller
     /**
      * Handles the profile settings submit.
      */
-    public function update(Request $request)
+    public function update(Request $request): RedirectResponse
     {
         $user = $request->user();
 
@@ -56,7 +58,7 @@ class ProfileController extends Controller
     /**
      * Shows the delete account form.
      */
-    public function delete()
+    public function delete(): View
     {
         return view('settings.profile.delete');
     }
@@ -64,7 +66,7 @@ class ProfileController extends Controller
     /**
      * Handles the delete account form submit.
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request): RedirectResponse
     {
         $request->validate([
             'password' => ['required', 'string', 'current_password'],
