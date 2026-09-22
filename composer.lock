@@ -7566,16 +7566,16 @@
         },
         {
             "name": "tonysm/tailwindcss-laravel",
-            "version": "2.3.0",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tonysm/tailwindcss-laravel.git",
-                "reference": "eaa26b31eddcd1856511466c2a210e8ba9079b09"
+                "reference": "f88be2d67529ae5a5d035e8864168c4872a058f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tonysm/tailwindcss-laravel/zipball/eaa26b31eddcd1856511466c2a210e8ba9079b09",
-                "reference": "eaa26b31eddcd1856511466c2a210e8ba9079b09",
+                "url": "https://api.github.com/repos/tonysm/tailwindcss-laravel/zipball/f88be2d67529ae5a5d035e8864168c4872a058f7",
+                "reference": "f88be2d67529ae5a5d035e8864168c4872a058f7",
                 "shasum": ""
             },
             "require": {
@@ -7622,7 +7622,7 @@
             ],
             "support": {
                 "issues": "https://github.com/tonysm/tailwindcss-laravel/issues",
-                "source": "https://github.com/tonysm/tailwindcss-laravel/tree/2.3.0"
+                "source": "https://github.com/tonysm/tailwindcss-laravel/tree/2.3.1"
             },
             "funding": [
                 {
@@ -7630,7 +7630,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-28T23:48:30+00:00"
+            "time": "2026-09-22T02:12:44+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
