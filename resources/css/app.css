@@ -3,7 +3,7 @@
 @source "../views";
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
-@plugin "./tailwind/daisyui.js" {
+@plugin "./tailwind/daisyui.mjs" {
     /* In practice, you will likely ship only with two themes, as below: */
     /* themes: light --default, dark --prefersdark; */
     themes: all;

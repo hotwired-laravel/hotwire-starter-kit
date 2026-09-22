@@ -11,7 +11,7 @@
             <x-auth-header :title="__('Authentication Code')" :description="__('Enter the authentication code provided by your authenticator application.')" />
 
             <!-- Authentication Code -->
-            <div>
+            <div class="relative flex flex-col w-full min-w-[18rem] flex-wrap items-center justify-center">
                 <x-form.label for="code" class="sr-only">{{ __('OTP Code') }}</x-form.label>
 
                 <x-form.otp-input id="code" name="code" :value="old('code')" :data-error="$errors->has('code')" />

@@ -14,17 +14,19 @@
                 <div class="peer-checked:hidden flex flex-col items-start justify-start space-y-4">
                     <p class="-translate-y-1 text-sm text-base-content dark:text-base-content/70">{{ __('To finish enabling two-factor authentication, scan the QR code or enter the setup key in your authenticator app.') }}</p>
 
-                    <div class="flex items-center justify-center h-full border border-base-content/20 rounded-xl p-4">
-                        <div class="bg-white p-3 rounded">
-                            {!! $qrCodeSvg !!}
+                    <div class="w-full flex items-center justify-center">
+                        <div class="flex items-center justify-center h-full border border-base-content/20 rounded-xl p-4">
+                            <div class="bg-white p-3 rounded">
+                                {!! $qrCodeSvg !!}
+                            </div>
                         </div>
                     </div>
 
-                    <label for="continue" role="button" class="btn btn-primary">Continue</label>
+                    <label for="continue" role="button" class="btn btn-primary mx-auto">Continue</label>
 
                     <div class="divider text-sm text-base-content/70">{{ __('or, enter the code manually') }}</div>
 
-                    <div class="join group" data-controller="clipboard">
+                    <div class="join group mx-auto" data-controller="clipboard">
                         <input class="input join-item" name="setup_code" type="text" data-clipboard-target="source" value="{{ $setupCode }}" readonly />
 
                         <button type="button" class="btn join-item rounded-r-full" data-action="clipboard#copy">
@@ -36,15 +38,13 @@
                     </div>
                 </div>
 
-                <form id="confirm-two-factor-form" action="{{ route('settings.confirmed-two-factor.update') }}" method="post" class="block w-full hidden peer-checked:flex flex-col items-start justify-start space-y-4">
+                <form id="confirm-two-factor-form" action="{{ route('settings.confirmed-two-factor.update') }}" method="post" class="hidden w-full peer-checked:flex flex-col items-start justify-start space-y-4">
                     @csrf
                     @method('PUT')
 
                     <p class="-translate-y-1 text-sm text-base-content dark:text-base-content/70">{{ __('Enter the 6-digit code from your authenticator app.') }}</p>
 
-                    <div class="w-full">
-                        <x-form.label for="code" class="sr-only">{{ __('Code') }}</x-form.label>
-
+                    <div class="relative flex flex-col w-full min-w-[18rem] flex-wrap items-center justify-center">
                         <x-form.otp-input id="code" name="code" :value="old('code')"
                             autofocus :data-error="$errors->has('code')" />
 
@@ -61,7 +61,10 @@
                         </div>
                     </div>
                 </form>
+
             </x-turbo::frame>
+
+
         </x-page-card>
     </section>
 </x-layouts.app>
