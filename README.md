@@ -13,13 +13,13 @@ This Hotwire Starter Kit comes with [Turbo Laravel](https://turbo-laravel.com/),
 You can use the Laravel Installer to setup the Hotwire Starter Kit.
 
 ```bash
-laravel new my-app --using=hotwired-laravel/hotwire-starter-kit
+laravel new my-app --using=hotwired-laravel/hotwire-starter-kit --pest --no-node
 ```
 
 If you want teams support, make sure you use the `teams` branch:
 
 ```bash
-laravel new my-app --using=hotwired-laravel/hotwire-starter-kit:dev-teams
+laravel new my-app --using=hotwired-laravel/hotwire-starter-kit:dev-teams --pest --no-node
 ```
 
 ### Local Development
