@@ -28,3 +28,4 @@ phpunit.xml
 .tailwindcss-manifest.json
 tailwindcss
 /public/js
+/storage/framework/hotreload.json*

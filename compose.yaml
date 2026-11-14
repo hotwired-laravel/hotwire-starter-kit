@@ -10,6 +10,7 @@ services:
       - "host.docker.internal:host-gateway"
     ports:
       - "${APP_PORT:-80}:80"
+      - '${HOTRELOAD_PORT:-7357}:${HOTRELOAD_PORT:-7357}'
     environment:
       WWWUSER: "${WWWUSER}"
       LARAVEL_SAIL: 1
