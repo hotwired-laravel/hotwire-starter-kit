@@ -18,11 +18,11 @@
         "laravel/framework": "^13.0",
         "laravel/tinker": "^3.0.0",
         "tonysm/importmap-laravel": "^2.5",
-        "tonysm/tailwindcss-laravel": "^2.3"
+        "tonysm/tailwindcss-laravel": "^2.4"
     },
     "require-dev": {
         "fakerphp/faker": "^1.24",
-        "hotwired-laravel/hotreload": "^0.0.10",
+        "hotwired-laravel/hotreload": "^0.0.11",
         "larastan/larastan": "^3.10",
         "laravel/pail": "^1.2.5",
         "laravel/pint": "^1.27",
