@@ -42,13 +42,13 @@ laravel new my-app --using=hotwired-laravel/hotwire-starter-kit:dev-teams --pest
 
 ## Local Development
 
-We ship with a [Procfile](./Procfile), so you may run it with [foreman](https://github.com/ddollar/foreman), [node-foreman](https://github.com/strongloop/node-foreman) or, our recommended way since it only requires a single binary, [Overmind](https://github.com/DarthSim/overmind). Download the binary, put it somewhere in your `$PATH`, then run:
+Start the local development processes (server, queue, logs, Tailwind CSS watcher, and Hotreload) with:
 
 ```bash
 composer run dev
 ```
 
-The `dev` script runs `overmind start` under the hood. If you're using foreman or node-foreman instead, run `foreman start` (or `nf start`) directly.
+The `dev` script runs `php artisan dev` under the hood. Run `php artisan dev:list` to see the registered processes.
 
 ### Running with Docker
 

@@ -22,7 +22,7 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.24",
-        "hotwired-laravel/hotreload": "^0.0.11",
+        "hotwired-laravel/hotreload": "^0.0.12",
         "larastan/larastan": "^3.10",
         "laravel/pail": "^1.2.5",
         "laravel/pint": "^1.27",
@@ -48,6 +48,14 @@
         }
     },
     "scripts": {
+        "setup": [
+            "composer install",
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php artisan key:generate",
+            "@php artisan migrate --force",
+            "@php artisan tailwindcss:download --force",
+            "@php artisan tailwindcss:build --no-tty"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
@@ -71,7 +79,7 @@
         ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
-            "overmind start"
+            "@php artisan dev"
         ],
         "lint": [
             "pint --parallel"
@@ -87,9 +95,9 @@
             "phpstan analyse --memory-limit=1G"
         ],
         "test": [
-            "@php artisan config:clear --ansi",
-            "@lint:check",
-            "@types:check",
+            "@php artisan config:clear --ansi @no_additional_args",
+            "@lint:check @no_additional_args",
+            "@types:check @no_additional_args",
             "@php artisan test"
         ]
     },
