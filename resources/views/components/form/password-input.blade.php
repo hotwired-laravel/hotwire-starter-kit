@@ -1,6 +1,6 @@
 @props(['class' => ''])
 
-<label class="input w-full join-item has-[[data-error]]:input-error {{ $class }}" data-controller="password-reveal">
+<label class="input w-full has-[[data-error]]:input-error {{ $class }}" data-controller="password-reveal">
     <x-heroicon-o-key aria-hidden="true" class="opacity-50 size-[1em]"/>
 
     <input {{ $attributes->merge(['type' => 'password', 'data-password-reveal-target' => 'input']) }} />
