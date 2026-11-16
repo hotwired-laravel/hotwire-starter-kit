@@ -49,6 +49,7 @@
             "composer install",
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@php artisan key:generate",
+            "@php artisan storage:link",
             "@php artisan migrate --force",
             "@php artisan tailwindcss:download --force",
             "@php artisan tailwindcss:build --no-tty"
